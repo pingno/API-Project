@@ -49,20 +49,20 @@ module.exports = {
       }
     }, options)
 
-    await queryInterface.addIndex('Users', ['username'], {
-      indexName: 'usernameId'
-    })
+    // await queryInterface.addIndex('Users', ['username'], {
+    //   indexName: 'usernameId'
+    // })
 
-    await queryInterface.addIndex('Users', ['email'], {
-      indexName: 'emailId'
-    })
+    // await queryInterface.addIndex('Users', ['email'], {
+    //   indexName: 'emailId'
+    // })
 
   },
   async down(queryInterface, Sequelize) {
 
     options.tableName = 'Users'
-    await queryInterface.removeIndex('Users', 'usernameId')
-    await queryInterface.removeIndex('Users', 'emailId')
+    // await queryInterface.removeIndex('Users', 'usernameId')
+    // await queryInterface.removeIndex('Users', 'emailId')
     return await queryInterface.dropTable(options);
 
   }
