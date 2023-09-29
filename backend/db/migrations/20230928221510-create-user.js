@@ -47,7 +47,7 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
-    })
+    }, options)
 
     await queryInterface.addIndex('Users', ['username'], {
       indexName: 'usernameId'
