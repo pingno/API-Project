@@ -1,5 +1,5 @@
 <!--!!START SILENT -->
-# AirBnB Clone
+# AirBnB Project
 
 # FSProject1
 <!--!!END -->
