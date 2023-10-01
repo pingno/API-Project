@@ -62,11 +62,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     lat: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(9, 6),
+      validate: {
+        min: -90,
+        max: 90
+      }
       // allowNull: false
     },
     lng: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(9, 6),
+      validate: {
+        min: -180,
+        max: 180
+      }
       // allowNull: false
     },
     name: {
