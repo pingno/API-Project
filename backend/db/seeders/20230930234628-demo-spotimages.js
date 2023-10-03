@@ -20,7 +20,12 @@ module.exports = {
       },
       {
         spotId: 2,
-        url: 'thespot.com',
+        url: 'thesecondspot.com',
+        preview: true
+      },
+      {
+        spotId: 2,
+        url: 'thethirdspot.com',
         preview: true
       }
       
@@ -34,7 +39,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ['thefirstspot.com','thespot.com'] }
+      url: { [Op.in]: ['thefirstspot.com','thesecondspot.com','thethirdspot.com'] }
     }, {});
 
   }

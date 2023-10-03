@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       Spot.hasMany(models.SpotImage, {
         foreignKey: 'spotId',
         onDelete: 'CASCADE',
-        hooks: true
+        hooks: true,
+        // as: 'previewImage'
       })
 
       //belongsTo ??
@@ -23,19 +24,31 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'ownerId'
       })
 
-      //belongsToMany ??
-      Spot.belongsToMany(models.User, {
-        through: models.Booking,
+      Spot.hasMany(models.Booking, {
         foreignKey: 'spotId',
-        otherKey: 'userId'
+        onDelete: 'CASCADE',
+        hooks: true
       })
 
-      //belongsToMany ??
-      Spot.belongsToMany(models.User, {
-        through: models.Review,
-        foreignKey: 'spotId',
-        otherKey: 'userId'
+      Spot.hasMany(models.Review, {
+        foreignkey: 'spotId',
+        onDelete: 'CASCADE',
+        hooks: true
       })
+
+      // //belongsToMany ??
+      // Spot.belongsToMany(models.User, {
+      //   through: models.Booking,
+      //   foreignKey: 'spotId',
+      //   otherKey: 'userId'
+      // })
+
+      // //belongsToMany ??
+      // Spot.belongsToMany(models.User, {
+      //   through: models.Review,
+      //   foreignKey: 'spotId',
+      //   otherKey: 'userId'
+      // })
 
 
     }
@@ -62,18 +75,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     lat: {
-      type: DataTypes.DECIMAL(9, 6),
+      type: DataTypes.DECIMAL(10, 7),
       validate: {
-        min: -90,
-        max: 90
+        min: -90.0000000,
+        max: 90.0000000
       }
       // allowNull: false
     },
     lng: {
-      type: DataTypes.DECIMAL(9, 6),
+      type: DataTypes.DECIMAL(10, 7),
       validate: {
-        min: -180,
-        max: 180
+        min: -180.0000000,
+        max: 180.0000000
       }
       // allowNull: false
     },
@@ -92,11 +105,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
-    defaultScope: {
-      attributes: {
-        exclude: ["createdAt", "updatedAt"]
-      }
-    }
+    // defaultScope: {
+    //   attributes: {
+    //     exclude: ["createdAt", "updatedAt"]
+    //   }
+    // }
   });
   return Spot;
 };

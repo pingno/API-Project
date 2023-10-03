@@ -19,11 +19,11 @@ module.exports = {
         city: 'Muffin',
         state: 'Texas',
         country: 'US',
-        lat: 211.23,
-        lng: 354.21,
+        lat: 12.2323453,
+        lng: 56.2123455,
         name: 'The cool spot',
         description: 'visit but beware of coyotes',
-        price: 200.26
+        price: 200
       },
       {
         ownerId: 2,
@@ -31,11 +31,23 @@ module.exports = {
         city: 'Muffin',
         state: 'Texas',
         country: 'US',
-        lat: 21.23,
-        lng: 34.21,
+        lat: 21.2354545,
+        lng: 34.2154545,
         name: 'The spot spot',
         description: 'beware of bears',
-        price: 250.52
+        price: 250
+      },
+      {
+        ownerId: 3,
+        address: '2929 Crossy road',
+        city: 'Chicken',
+        state: 'Alabama',
+        country: 'US',
+        lat: 54.2453545,
+        lng: 78.2154545,
+        name: 'The third spot',
+        description: 'you shall not pass',
+        price: 266
       }
       
     ], { validate: true });
@@ -48,7 +60,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      address: { [Op.in]: ['4402 Muffin Blvd', '4403 Muffin Blvd'] }
+      address: { [Op.in]: ['4402 Muffin blvd', '4403 Muffin blvd', '2929 Crossy road'] }
     }, {});
 
   }

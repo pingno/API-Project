@@ -17,7 +17,7 @@ module.exports = {
         spotId: 1,
         userId: 1,
         review: 'this place is ratchet',
-        stars: 3
+        stars: 4
 
       },
       {
@@ -25,6 +25,18 @@ module.exports = {
         userId: 2,
         review: 'this place is ghetto',
         stars: 2
+      },
+      {
+        spotId: 3,
+        userId: 3,
+        review: 'this place is pretty nice',
+        stars: 5
+      },
+      {
+        spotId: 1,
+        userId: 2,
+        review: 'do not come here',
+        stars: 5
       }
       
     ], { validate: true });
@@ -37,7 +49,7 @@ module.exports = {
     options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      review: { [Op.in]: ['this place is ratchet','this place is ghetto'] }
+      review: { [Op.in]: ['this place is ratchet','this place is ghetto', 'this place is pretty nice', 'do not come here'] }
     }, {});
 
   }

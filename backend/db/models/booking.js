@@ -11,6 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      Booking.belongsTo(models.User, {
+        foreignKey: 'userId'
+      })
+
+      Booking.belongsTo(models.Spot, {
+        foreignKey: 'spotId'
+      })
+
+
     }
   }
   Booking.init({
@@ -20,22 +30,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        // checkStartDate(val){
-        //   if(val < DataTypes.literal("CURRENT_TIMESTAMP")){
-        //     throw new Error('Start date must be after current date')
-        //   }
-        // }
+        isAfter: new Date().toJSON().slice(0,10)
       }
     },
     endDate: {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        afterStartDate(val){
-          if(val < this.startDate){
-            throw new Error('End date must be after start date')
-          }
-        }
+
+        // afterStartDate(val){
+        //   if(val < this.startDate){
+        //     throw new Error('End date must be after start date')
+        //   }
+        // }
+
+        // isAfter: this.startDate
 
       }
     }

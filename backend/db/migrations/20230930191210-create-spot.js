@@ -21,6 +21,8 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
+        onDelete: 'CASCADE',
+        hooks: true
         
       },
       address: {
@@ -41,11 +43,11 @@ module.exports = {
         allowNull: false
       },
       lat: {
-        type: Sequelize.DECIMAL(9, 6),
+        type: Sequelize.DECIMAL(10, 7),
         // allowNull: false
       },
       lng: {
-        type: Sequelize.DECIMAL(9, 6),
+        type: Sequelize.DECIMAL(10, 7),
         // allowNull: false
       },
       name: {
