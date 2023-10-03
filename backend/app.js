@@ -16,7 +16,6 @@ const isProduction = environment === 'production';
 const app = express();
 
 app.use(morgan('dev'));
-
 app.use(cookieParser());
 app.use(express.json());
 
@@ -71,15 +70,36 @@ app.use((err, _req, _res, next) => {
 });
 
 
+
 // Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
-  console.error(err);
-  res.json({
-    title: err.title || 'Server Error',
+ 
+  if(err.status === 401){  // DO NOT TOUCH THIS ITS WORKING FINE
+    return res.json({
+      // title: err.title || 'Server Error',
+      message: err.message,
+      // stack: isProduction ? null : err.stack
+    });
+  }
+  
+  if(err.status === 403){
+    return res.json({
+      message: err.message,
+      errors: err.errors
+      // stack: isProduction ? null : err.stack
+    })
+  }
+
+
+  console.error(err)
+
+ return res.json({
+    // title: err.title || 'Server Error',
+    title: err.title,
     message: err.message,
     errors: err.errors,
-    stack: isProduction ? null : err.stack
+    // stack: isProduction ? null : err.stack
   });
 });
 

@@ -1,7 +1,6 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 
-
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -9,34 +8,25 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('ReviewImages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
+      reviewId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Reviews',
+          key: 'id'
+        }
+      },
+      url: {
         type: Sequelize.STRING,
+        unique: true,
         allowNull: false
-      },
-      lastName: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      username: {
-        type: Sequelize.STRING(30),
-        allowNull: false,
-        unique: true
-      },
-      email: {
-        type: Sequelize.STRING(256),
-        allowNull: false,
-        unique: true
-      },
-      hashedPassword: {
-        type: Sequelize.STRING.BINARY,
-        allowNull: false
+        
       },
       createdAt: {
         allowNull: false,
@@ -48,22 +38,12 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
-    }, options)
-
-    // await queryInterface.addIndex('Users', ['username'], {
-    //   indexName: 'usernameId'
-    // })
-
-    // await queryInterface.addIndex('Users', ['email'], {
-    //   indexName: 'emailId'
-    // })
-
+    }, options);
   },
   async down(queryInterface, Sequelize) {
 
-    options.tableName = 'Users'
-    // await queryInterface.removeIndex('Users', 'usernameId')
-    // await queryInterface.removeIndex('Users', 'emailId')
+    // await queryInterface.dropTable('ReviewImages');
+    options.tableName = 'ReviewImages'
     return await queryInterface.dropTable(options);
 
   }
