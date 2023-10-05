@@ -45,6 +45,8 @@ router.get('/current', requireAuth, async (req, res) => {
             } else {
                 reviewsObj[i].Spot.previewImage = 'No preview available'
             }
+        } else {
+            reviewsObj[i].Spot.previewImage = 'No preview available'
         }
     }
 

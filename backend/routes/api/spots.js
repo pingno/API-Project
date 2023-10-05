@@ -107,6 +107,8 @@ for(let i = 0; i < spotsJSON.length; i++){
         } else {
             spotsJSON[i].previewImage = 'No preview available'
         }
+    } else {
+        spotsJSON[i].previewImage = 'No preview available'
     }
 }
 
@@ -150,6 +152,8 @@ router.get('/current', requireAuth, async (req,res,next) => {
             spotsJSON[i].previewImage = images[j].url
             break
             } else { spotsJSON[i].previewImage = 'No preview available'  }
+        } else {
+            spotsJSON[i].previewImage = 'No preview available'
         }
     }
 

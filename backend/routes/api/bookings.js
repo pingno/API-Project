@@ -36,9 +36,12 @@ router.get('/current', requireAuth, async (req, res) => {
         if(images[j].spotId == bookingsObj[i].spotId){
             if(images[j].preview === true){
             bookingsObj[i].Spot.previewImage = images[j].url
+            break
             } else {
                 bookingsObj[i].Spot.previewImage = 'No preview available'
             }
+        } else {
+            bookingsObj[i].Spot.previewImage = 'No preview available'
         }
     }
 
