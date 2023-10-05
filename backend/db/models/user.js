@@ -31,22 +31,6 @@ module.exports = (sequelize, DataTypes) => {
         hooks: true
       })
 
-
-      // //belongsToMany ??
-      // User.belongsToMany(models.Spot, {
-      //   through: models.Booking,
-      //   foreignKey: 'userId',
-      //   otherKey: 'spotId'
-      // })
-      
-      // //belongsToMany ??
-      // User.belongsToMany(models.Spot, {
-      //   through: models.Review,
-      //   foreignKey: 'userId',
-      //   otherKey: 'spotId'
-      // })
-
-
     }
   }
   User.init({
