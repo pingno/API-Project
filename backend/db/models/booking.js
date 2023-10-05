@@ -30,33 +30,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        isAfter: new Date().toJSON().slice(0,10)
+        isAfter: new Date().toLocaleString()
       }
     },
     endDate: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-
-        // afterStartDate(val){
-        //   if(val < this.startDate){
-        //     throw new Error('End date must be after start date')
-        //   }
-        // }
-
-        // isAfter: this.startDate
-
-      }
+      allowNull: false
     }
 
   }, {
     sequelize,
-    modelName: 'Booking',
-    defaultScope: {
-      attributes: {
-        exclude: ["createdAt", "updatedAt"]
-      }
-    }
+    modelName: 'Booking'
   });
   return Booking;
 };

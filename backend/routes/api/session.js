@@ -14,7 +14,7 @@ const router = express.Router();
 const validateLogin = [
     check('credential')
       .exists({ checkFalsy: true })
-      // .notEmpty()
+      .notEmpty()
       .withMessage('Email or username is required'),
     check('password')
       .exists({ checkFalsy: true })
@@ -28,6 +28,8 @@ router.post(
     validateLogin,
     async (req, res, next) => {
       const { credential, password } = req.body;
+
+
   
       console.log('hello')
 
