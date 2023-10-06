@@ -89,7 +89,7 @@ router.put('/:bookingId', requireAuth, reqAutBooking, async (req, res) => {
 
         //Error response: Can't edit a booking that's past the end date
         if(currentDate >= userEndDate){
-            res.status(403).json({
+           return res.status(403).json({
                 message: "Past bookings can't be modified"
             })
         }
@@ -139,7 +139,7 @@ const reservationEndDate = new Date (booking.endDate).getTime()
 
 //if current date is between a reservations start and end date, then they can't delete
 if(currentDate >= reservationStartDate && currentDate <= reservationEndDate){
-    res.status(403).json({
+   return res.status(403).json({
         message: "Bookings that have been started can't be deleted"
     })
 }

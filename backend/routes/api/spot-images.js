@@ -16,7 +16,7 @@ const user = req.user
 const spotImage = await SpotImage.findByPk(req.params.imageId)
 
 if(!spotImage){
-    res.status(404).json({ message: "Spot Image couldn't be found" })
+   return res.status(404).json({ message: "Spot Image couldn't be found" })
 }
 
    const spot = await spotImage.getSpot()
