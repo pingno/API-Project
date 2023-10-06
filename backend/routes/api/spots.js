@@ -72,14 +72,14 @@ let errorList = {}
     if(size < 1) errorList.size = "Size must be greater than or equal to 1"
 
     if(maxLat && minLat){
-        if((maxLat < minLat) || (maxLat < -90 || maxLat > 90) || (minLat < -90 || minLat > 90)) errorList.maxLat = "Maximum latitude is invalid"
-        if((minLat > maxLat) || (maxLat < -90 || maxLat > 90) || (minLat < -90 || minLat > 90)) errorList.minLat = "Minimum latitude is invalid"
+        if((maxLat < minLat) || (maxLat < -90 || maxLat > 90)) errorList.maxLat = "Maximum latitude is invalid"
+        if((minLat > maxLat) || (minLat < -90 || minLat > 90)) errorList.minLat = "Minimum latitude is invalid"
     } else if (maxLat && (maxLat < -90 || maxLat > 90)) errorList.maxLat = "Maximum latitude is invalid"
     else if (minLat && (minLat < -90 || minLat > 90)) errorList.minLat = "Maximum latitude is invalid"
 
     if(minLng && maxLng){
-        if((maxLng < minLng) || (minLng < -180 || minLng > 180) || (maxLng < -180 || maxLng > 180)) errorList.maxLng = "Maximum longitude is invalid"
-        if((minLng > maxLng) || (minLng < -180 || minLng > 180) || (maxLng < -180 || maxLng > 180)) errorList.minLng = "Minimum longitude is invalid"
+        if((maxLng < minLng) || (maxLng < -180 || maxLng > 180)) errorList.maxLng = "Maximum longitude is invalid"
+        if((minLng > maxLng) || (minLng < -180 || minLng > 180)) errorList.minLng = "Minimum longitude is invalid"
     } else if(minLng && (minLng < -180 || minLng > 180)) errorList.maxLng = "Maximum longitude is invalid"
     else if(maxLng && (maxLng < -180 || maxLng > 180)) errorList.maxLng = "Maximum longitude is invalid"
    
