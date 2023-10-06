@@ -115,8 +115,11 @@ const reqAuthorReview = async function (req, res, next){
 }
 
 const reqAutBooking = async function (req, res, next){
+
   const user = req.user
   const booking = await Booking.findByPk(req.params.bookingId)
+
+  
 
   if(!booking){
     return res.status(404).json({

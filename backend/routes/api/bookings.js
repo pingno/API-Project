@@ -4,7 +4,8 @@ const sequelize = require('sequelize')
 const { requireAuth, reqAuthorReview, reqAuthorization, reqAutBooking } = require('../../utils/auth');
 const { Spot, SpotImage, Review, ReviewImage, User, Booking } = require('../../db/models');
 const user = require('../../db/models/user');
-// const { handleValidationErrors } = require('../../utils/validation');
+const { handleValidationErrors } = require('../../utils/validation');
+const { Op } = require("sequelize")
 
 
 // Get all of the Current User's Bookings
@@ -32,7 +33,7 @@ router.get('/current', requireAuth, async (req, res) => {
     const images = await SpotImage.findAll() 
 
     for(let i = 0; i < bookingsObj.length; i++){
-        for(let j = 0; j < images.length; j++)
+        for(let j = 0; j < images.length; j++){
         if(images[j].spotId == bookingsObj[i].spotId){
             if(images[j].preview === true){
             bookingsObj[i].Spot.previewImage = images[j].url
@@ -44,8 +45,13 @@ router.get('/current', requireAuth, async (req, res) => {
             bookingsObj[i].Spot.previewImage = 'No preview available'
         }
     }
+        bookingsObj[i].startDate = bookingsObj[i].startDate.toISOString().slice(0,10)
+        bookingsObj[i].endDate = bookingsObj[i].endDate.toISOString().slice(0,10)
+    
+    }
 
     res.json({  Bookings: bookingsObj  })
+
 
 })
 
@@ -71,17 +77,26 @@ router.put('/:bookingId', requireAuth, reqAutBooking, async (req, res) => {
         })
     }
 
+    const booking = await Booking.findByPk(req.params.bookingId)
+    //find all bookings of the current user
     const bookings = await Booking.findAll({
         raw:true,
-        where: {  userId: user.id  }
+        where: {  
+            userId: user.id,
+            id: {[Op.not]: booking.id}  
+        }
     })
 
     const currentDate = new Date().getTime()
-
     const userStartDate = new Date (startDate).getTime()
     const userEndDate = new Date (endDate).getTime()
 
+
+ 
+
+
     const errors = {}
+
     bookings.forEach(reservation => {
 
         const reservationStartDate = new Date (reservation.startDate).getTime()
@@ -89,7 +104,7 @@ router.put('/:bookingId', requireAuth, reqAutBooking, async (req, res) => {
 
         //Error response: Can't edit a booking that's past the end date
         if(currentDate >= userEndDate){
-            res.status(403).json({
+           return res.status(403).json({
                 message: "Past bookings can't be modified"
             })
         }
@@ -98,6 +113,10 @@ router.put('/:bookingId', requireAuth, reqAutBooking, async (req, res) => {
             errors.startDate = "Start date conflicts with an existing booking"
         }
         if(userEndDate >= reservationStartDate && userEndDate <= reservationEndDate){
+            errors.endDate = "End date conflicts with an existing booking"
+        }
+        if(userStartDate < reservationStartDate && reservationEndDate < userEndDate){
+            errors.startDate = "Start date conflicts with an existing booking",
             errors.endDate = "End date conflicts with an existing booking"
         }
 
@@ -110,14 +129,24 @@ router.put('/:bookingId', requireAuth, reqAutBooking, async (req, res) => {
         })
     }
 
-
-const booking = await Booking.findByPk(req.params.bookingId)
-
     const updatedBooking = await booking.update({
         startDate, endDate
     })
 
-    res.json(updatedBooking)
+    const updatedBookingObj = {
+        id: updatedBooking.id,
+        spotId: updatedBooking.spotId,
+        userId: updatedBooking.userId,
+        startDate: updatedBooking.startDate.toISOString().slice(0,10),
+        endDate: updatedBooking.endDate.toISOString().slice(0,10),
+        createdAt: updatedBooking.createdAt,
+        updatedAt: updatedBooking.updatedAt
+
+    }
+
+
+    res.json(updatedBookingObj)
+
 })
 
 
@@ -139,7 +168,7 @@ const reservationEndDate = new Date (booking.endDate).getTime()
 
 //if current date is between a reservations start and end date, then they can't delete
 if(currentDate >= reservationStartDate && currentDate <= reservationEndDate){
-    res.status(403).json({
+   return res.status(403).json({
         message: "Bookings that have been started can't be deleted"
     })
 }
