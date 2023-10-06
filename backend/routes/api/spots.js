@@ -9,49 +9,93 @@ const moment = require('moment')
 const { check } = require('express-validator');
 const { Op } = require("sequelize")
 
-const validateQuery = [
-    check('page')
-        .optional({values: "falsy"})
-        .isInt({ min: 1, max: 10})
-        .withMessage('Page must be greater than or equal to 1'),
-    check('size')
-        .optional({values: "falsy"})
-        .isInt({ min: 1, max: 20})
-        .withMessage('Size must be greater than or equal to 1'),
-    check('maxLat')
-        .optional({values: "falsy"})
-        .isInt({ min: -90.0000000, max: 90.0000000})
-        .withMessage('Maximum latitude is invalid'),
-    check('minLat')
-        .optional({values: "falsy"})
-        .isInt({ min: -90.0000000, max: 90.0000000})
-        .withMessage('Minimum latitude is invalid'),
-    check('minLng')
-        .optional({values: "falsy"})
-        .isInt({ min: -180.0000000, max: 180.0000000})
-        .withMessage('Maximum longitude is invalid'),
-    check('maxLng')
-        .optional({values: "falsy"})
-        .isInt({ min: -180.0000000, max: 180.0000000})
-        .withMessage('Minimum longitude is invalid'),
-    check('minPrice')
-        .optional({values: "falsy"})
-        .isFloat({ min: 0})
-        .withMessage('Minimum price must be greater than or equal to 0'),
-    check('maxPrice')
-        .optional({values: "falsy"})
-        .isFloat({ min: 0})
-        .withMessage('Maximum price must be greater than or equal to 0'),
 
-    handleValidationErrors
-    ]
+
+// const validateQuery = [
+//     check('page')
+//         .optional({values: "falsy"})
+//         .isInt({ min: 1, max: 10})
+//         .withMessage('Page must be greater than or equal to 1'),
+//     check('size')
+//         .optional({values: "falsy"})
+//         .isInt({ min: 1, max: 20})
+//         .withMessage('Size must be greater than or equal to 1'),
+//     check('maxLat')
+//         .optional({values: "falsy"})
+//         .isFloat({ min: -90.0000000, max: 90.0000000})
+//         .withMessage('Maximum latitude is invalid'),
+//     check('minLat')
+//         .optional({values: "falsy"})
+//         .isFloat({ min: -90.0000000, max: 90.0000000})
+//         .withMessage('Minimum latitude is invalid'),
+//     check('minLng')
+//         .optional({values: "falsy"})
+//         .isFloat({ min: -180.0000000, max: 180.0000000})
+//         .withMessage('Minimum longitude is invalid')
+//         .custom(value => {
+//             if(this.maxLng && value > this.maxLng) return false
+//             else return true
+//         })
+//         .withMessage('Minimum longitude is invalid'),
+//     check('maxLng')
+//         .optional({values: "falsy"})
+//         .isFloat({ min:-180.0000000, max: 180.0000000})
+//         .withMessage('Maximum longitude is invalid')
+//         .custom(value => {
+//             if(value < this.minLng) return false
+//             else return true
+//         })
+//         .withMessage('Maximum longitude is invalid'),
+//     check('minPrice')
+//         .optional({values: "falsy"})
+//         .isFloat({ min: 0})
+//         .withMessage('Minimum price must be greater than or equal to 0'),
+//     check('maxPrice')
+//         .optional({values: "falsy"})
+//         .isFloat({ min: 0})
+//         .withMessage('Maximum price must be greater than or equal to 0'),
+
+//     handleValidationErrors
+//     ]
 
 
 //Get all spots COMPLETE
 //COMPLETE
-router.get('/', validateQuery, async (req,res,next) => {
+router.get('/', async (req,res,next) => {
 
 let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+
+
+let errorList = {}
+
+    if(page < 1) errorList.page = "Page must be greater than or equal to 1"
+    if(size < 1) errorList.size = "Size must be greater than or equal to 1"
+
+    if(maxLat && minLat){
+        if((maxLat < minLat) || (maxLat < -90 || maxLat > 90) || (minLat < -90 || minLat > 90)) errorList.maxLat = "Maximum latitude is invalid"
+        if((minLat > maxLat) || (maxLat < -90 || maxLat > 90) || (minLat < -90 || minLat > 90)) errorList.minLat = "Minimum latitude is invalid"
+    } else if (maxLat && (maxLat < -90 || maxLat > 90)) errorList.maxLat = "Maximum latitude is invalid"
+    else if (minLat && (minLat < -90 || minLat > 90)) errorList.minLat = "Maximum latitude is invalid"
+
+    if(minLng && maxLng){
+        if((maxLng < minLng) || (minLng < -180 || minLng > 180) || (maxLng < -180 || maxLng > 180)) errorList.maxLng = "Maximum longitude is invalid"
+        if((minLng > maxLng) || (minLng < -180 || minLng > 180) || (maxLng < -180 || maxLng > 180)) errorList.minLng = "Minimum longitude is invalid"
+    } else if(minLng && (minLng < -180 || minLng > 180)) errorList.maxLng = "Maximum longitude is invalid"
+    else if(maxLng && (maxLng < -180 || maxLng > 180)) errorList.maxLng = "Maximum longitude is invalid"
+   
+    if(minPrice && minPrice < 0) errorList.minPrice = "Minimum price must be greater than or equal to 0"
+    if(maxPrice && maxPrice < 0) errorList.maxPrice = "Maximum price must be greater than or equal to 0"
+   
+
+    if(Object.keys(errorList).length){
+       return res.status(400).json({
+            message: "Bad Request",
+            errors: {...errorList}
+        })
+    }
+
+
+
 
 const where = {}
 const pagination = {}
@@ -235,11 +279,11 @@ router.post('/', requireAuth, async (req, res) => {
     if(!address) errorList.address = "Street address is required"
     if(!city) errorList.city = "City is required"
     if(!country) errorList.country = "Country is required"
-    if(isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
-    if(isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
-    if(name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
+    if(!lat || isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
+    if(!lng || isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
+    if(!name || name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
     if(!description) errorList.description = "Description is required"
-    if(!price) errorList.price = "Price per day is required"
+    if(!price || price < 1) errorList.price = "Price per day is required"
 
     if(Object.keys(errorList).length){
        return res.status(400).json({
@@ -308,11 +352,11 @@ router.put('/:spotId', requireAuth, reqAuthorization, async(req,res) => {
     if(!address) errorList.address = "Street address is required"
     if(!city) errorList.city = "City is required"
     if(!country) errorList.country = "Country is required"
-    if(isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
-    if(isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
-    if(name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
+    if(!lat || isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
+    if(!lng || isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
+    if(!name || name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
     if(!description) errorList.description = "Description is required"
-    if(!price) errorList.price = "Price per day is required"
+    if(!price || price < 1) errorList.price = "Price per day is required"
 
     if(Object.keys(errorList).length){
        return res.status(400).json({
@@ -450,12 +494,28 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
             }
         })
 
+        let bookingsArr = []
+        booking.forEach(reservation => {
+            
+            bookingsArr.push({
+                User: reservation.User,
+                id: reservation.id,
+                spotId: reservation.spotId,
+                userId: reservation.userId,
+                startDate: reservation.startDate.toISOString().slice(0,10),
+                endDate: reservation.endDate.toISOString().slice(0,10),
+                createdAt: reservation.createdAt,
+                updatedAt: reservation.updatedAt
+            })
+
+        })
+
         res.json({
-            Bookings: booking
+            Bookings: bookingsArr
         })
 
       } else {
-        //if you ARE NOT the owner
+        //if you ARE NOT the owner of the spot
         const booking = await Booking.findAll({
             where: {
                 spotId: req.params.spotId
@@ -463,8 +523,19 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
             attributes: ['spotId', 'startDate', 'endDate']
         })
 
+        let bookingsArr = []
+        booking.forEach(reservation => {
+            
+            bookingsArr.push({
+                spotId: reservation.spotId,
+                startDate: reservation.startDate.toISOString().slice(0,10),
+                endDate: reservation.endDate.toISOString().slice(0,10)
+            })
+
+        })
+
         res.json({
-            Bookings: booking
+            Bookings: bookingsArr
         })
 
       }
@@ -507,12 +578,20 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
         const reservationStartDate = new Date (reservation.startDate).getTime()
         const reservationEndDate = new Date (reservation.endDate).getTime()
 
+            //if userInput start date is between a previous booking
         if(userStartDate >= reservationStartDate && userStartDate <= reservationEndDate){
             errors.startDate = "Start date conflicts with an existing booking"
-        }
+        }  //if userInput end date is between a previous booking
         if(userEndDate >= reservationStartDate && userEndDate <= reservationEndDate){
             errors.endDate = "End date conflicts with an existing booking"
         }
+
+        //if userInput startDate and endDate surrounds an existing booking
+        if(userStartDate < reservationStartDate && reservationEndDate < userEndDate){
+            errors.startDate = "Start date conflicts with an existing booking",
+            errors.endDate = "End date conflicts with an existing booking"
+        }
+  
 
     })
 
@@ -533,11 +612,25 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
             endDate
         })
         
-    res.json(booking)
+
+    const bookingObj = {
+        id: booking.id,
+        spotId: booking.spotId,
+        userId: user.id,
+        startDate: booking.startDate.toISOString().slice(0,10),
+        endDate: booking.endDate.toISOString().slice(0,10),
+        createdAt: booking.createdAt,
+        updatedAt: booking.updatedAt
+    }   
+
+    res.json(bookingObj)
 
     } else { //cannot book at your own spot
-        return res.status(404).json({
-            message: "Owner of spot cannot book"
+        return res.status(403).json({
+            message: "Authorization required",
+            errors: {
+                message: "Forbidden"
+            }
         })
     }
 

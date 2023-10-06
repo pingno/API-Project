@@ -25,7 +25,11 @@ if(!spotImage){
         res.json({ message: "Successfully deleted"  })
     
     } else {
-        return res.status(403).json({ message: "Forbidden" })
+        return res.status(403).json({ 
+            message: "Authorization required",
+            errors: {
+                message: "Forbidden"
+        } })
     }
 
 })
