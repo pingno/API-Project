@@ -77,7 +77,7 @@ router.post('/:reviewId/images', requireAuth , reqAuthorReview, async (req, res)
     //Error response: Cannot add any more images because there is a maximum of 10 images per resource
     if(allReviewImages.length >= 10){  
         return res.status(403).json({ 
-            message: "Maximum number of images for this resources was reached"
+            message: "Maximum number of images for this resource was reached"
         })  
     }
 
