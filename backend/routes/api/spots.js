@@ -629,12 +629,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
     res.json(bookingObj)
 
     } else { //cannot book at your own spot
-        return res.status(403).json({
-            message: "Authorization required",
-            errors: {
-                message: "Forbidden"
-            }
-        })
+        return res.status(403).json({  message: "Forbidden"  })
     }
 
 })

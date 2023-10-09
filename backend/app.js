@@ -83,16 +83,17 @@ app.use((err, _req, res, _next) => {
     });
   }
   
+  // if(err.status === 403){
+  //   return res.json({
+  //     message: err.message,
+  //     errors: err.errors
+  //     // stack: isProduction ? null : err.stack
+  //   })
+  // }
+
   if(err.status === 403){
-    return res.json({
-      message: err.message,
-      errors: err.errors
-      // stack: isProduction ? null : err.stack
-    })
+    return res.json({message: err.message})
   }
-
-
-  console.error(err)
 
  return res.json({
     // title: err.title || 'Server Error',
