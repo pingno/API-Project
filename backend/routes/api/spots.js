@@ -71,6 +71,11 @@ let errorList = {}
     if(page < 1) errorList.page = "Page must be greater than or equal to 1"
     if(size < 1) errorList.size = "Size must be greater than or equal to 1"
 
+    if(maxLat) maxLat = Number(maxLat)
+    if(minLat) minLat = Number(minLat)
+    if(maxLng) maxLng = Number(maxLng)
+    if(minLng) minLng = Number(minLng)
+
     if(maxLat && minLat){
         if((maxLat < minLat) || (maxLat < -90 || maxLat > 90)) errorList.maxLat = "Maximum latitude is invalid"
         if((minLat > maxLat) || (minLat < -90 || minLat > 90)) errorList.minLat = "Minimum latitude is invalid"
