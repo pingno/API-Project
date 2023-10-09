@@ -92,7 +92,6 @@ router.put('/:bookingId', requireAuth, reqAutBooking, async (req, res) => {
     const userEndDate = new Date (endDate).getTime()
 
 
- 
 
 
     const errors = {}
@@ -108,13 +107,14 @@ router.put('/:bookingId', requireAuth, reqAutBooking, async (req, res) => {
                 message: "Past bookings can't be modified"
             })
         }
-
+        //if userInput startDate is between a previous reservations booking
         if(userStartDate >= reservationStartDate && userStartDate <= reservationEndDate){
             errors.startDate = "Start date conflicts with an existing booking"
-        }
+        }//if userInput endDate is between a previous reservations booking
         if(userEndDate >= reservationStartDate && userEndDate <= reservationEndDate){
             errors.endDate = "End date conflicts with an existing booking"
         }
+        //if userInput startDate or endDate surround an existing booking
         if(userStartDate < reservationStartDate && reservationEndDate < userEndDate){
             errors.startDate = "Start date conflicts with an existing booking",
             errors.endDate = "End date conflicts with an existing booking"

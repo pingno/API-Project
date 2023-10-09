@@ -19,11 +19,11 @@ module.exports = {
         city: 'Muffin',
         state: 'Texas',
         country: 'US',
-        lat: 12.2323453,
-        lng: 56.2123455,
+        lat: 35.6323453,
+        lng: 36.2123455,
         name: 'The cool spot',
         description: 'visit but beware of coyotes',
-        price: 200
+        price: 75
       },
       {
         ownerId: 2,
@@ -43,11 +43,11 @@ module.exports = {
         city: 'Chicken',
         state: 'Alabama',
         country: 'US',
-        lat: 54.2453545,
-        lng: 78.2154545,
+        lat: 40.2453545,
+        lng: 39.2154545,
         name: 'The third spot',
         description: 'you shall not pass',
-        price: 266
+        price: 90
       }
       
     ], { validate: true });
