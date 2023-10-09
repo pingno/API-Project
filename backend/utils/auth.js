@@ -88,7 +88,7 @@ const reqAuthorization = async function (req, res, next) {
 
   if(user.id === spot.ownerId) return next()
 
-  const err = new Error('Authorization required')
+  const err = new Error('Forbidden')
   err.errors = { message: 'Forbidden' }
   err.status = 403;
   return next(err)
@@ -107,7 +107,7 @@ const reqAuthorReview = async function (req, res, next){
 
   if(user.id === review.userId) return next()
 
-  const err = new Error('Authorization required')
+  const err = new Error('Forbidden')
   err.errors = { message: 'Forbidden'}
   err.status = 403;
   return next(err)
@@ -127,7 +127,7 @@ const reqAutBooking = async function (req, res, next){
 
   if(user.id === booking.userId) return next()
 
-  const err = new Error('Authorization required')
+  const err = new Error('Forbidden')
   err.errors = { message: 'Forbidden'}
   err.status = 403;
   return next(err)
