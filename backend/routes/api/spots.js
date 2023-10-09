@@ -127,6 +127,7 @@ if(minPrice && maxPrice){
 
 if(!page) page = 1
 if(!size) size = 20
+if(size > 20) size = 20
 
 pagination.limit = size
 pagination.offset = size * (page - 1)
