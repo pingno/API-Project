@@ -279,6 +279,7 @@ router.post('/', requireAuth, async (req, res) => {
 
     if(!address) errorList.address = "Street address is required"
     if(!city) errorList.city = "City is required"
+    if(!state) errorList.state = "State is required"
     if(!country) errorList.country = "Country is required"
     if(!lat || isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
     if(!lng || isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
@@ -352,6 +353,7 @@ router.put('/:spotId', requireAuth, reqAuthorization, async(req,res) => {
 
     if(!address) errorList.address = "Street address is required"
     if(!city) errorList.city = "City is required"
+    if(!state) errorList.state = "State is required"
     if(!country) errorList.country = "Country is required"
     if(!lat || isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
     if(!lng || isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
@@ -457,7 +459,7 @@ router.post('/:spotId/reviews', requireAuth,  async (req, res) => {
     //Error response: Review from the current user already exists for the Spot
     if(allReviews.length){
       return res.status(500).json({
-            message: "User already has a review"
+            message: "User already has a review for this spot"
         })
     } 
 
