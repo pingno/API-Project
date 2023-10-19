@@ -11,54 +11,6 @@ const { Op } = require("sequelize")
 
 
 
-// const validateQuery = [
-//     check('page')
-//         .optional({values: "falsy"})
-//         .isInt({ min: 1, max: 10})
-//         .withMessage('Page must be greater than or equal to 1'),
-//     check('size')
-//         .optional({values: "falsy"})
-//         .isInt({ min: 1, max: 20})
-//         .withMessage('Size must be greater than or equal to 1'),
-//     check('maxLat')
-//         .optional({values: "falsy"})
-//         .isFloat({ min: -90.0000000, max: 90.0000000})
-//         .withMessage('Maximum latitude is invalid'),
-//     check('minLat')
-//         .optional({values: "falsy"})
-//         .isFloat({ min: -90.0000000, max: 90.0000000})
-//         .withMessage('Minimum latitude is invalid'),
-//     check('minLng')
-//         .optional({values: "falsy"})
-//         .isFloat({ min: -180.0000000, max: 180.0000000})
-//         .withMessage('Minimum longitude is invalid')
-//         .custom(value => {
-//             if(this.maxLng && value > this.maxLng) return false
-//             else return true
-//         })
-//         .withMessage('Minimum longitude is invalid'),
-//     check('maxLng')
-//         .optional({values: "falsy"})
-//         .isFloat({ min:-180.0000000, max: 180.0000000})
-//         .withMessage('Maximum longitude is invalid')
-//         .custom(value => {
-//             if(value < this.minLng) return false
-//             else return true
-//         })
-//         .withMessage('Maximum longitude is invalid'),
-//     check('minPrice')
-//         .optional({values: "falsy"})
-//         .isFloat({ min: 0})
-//         .withMessage('Minimum price must be greater than or equal to 0'),
-//     check('maxPrice')
-//         .optional({values: "falsy"})
-//         .isFloat({ min: 0})
-//         .withMessage('Maximum price must be greater than or equal to 0'),
-
-//     handleValidationErrors
-//     ]
-
-
 //Get all spots COMPLETE
 //COMPLETE
 router.get('/', async (req,res,next) => {
