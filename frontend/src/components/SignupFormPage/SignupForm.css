@@ -1,0 +1,13 @@
+.form-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.form-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
