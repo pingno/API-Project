@@ -25,15 +25,15 @@ router.use('/spot-images', spotImagesRouter)
 router.use('/review-images', reviewImagesRouter)
 
 
-router.post('/test', (req, res) => {
-  res.json({ requestBody: req.body });
-});
+// router.post('/test', (req, res) => {
+//   res.json({ requestBody: req.body });
+// });
 
 
-router.get('/restore-user', (req, res) => {
-    return res.json(req.user);
-  }
-);
+// router.get('/restore-user', (req, res) => {
+//     return res.json(req.user);
+//   }
+// );
 
 
 // router.get(
