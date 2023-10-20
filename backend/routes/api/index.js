@@ -30,10 +30,10 @@ router.post('/test', (req, res) => {
 });
 
 
-router.get('/restore-user', (req, res) => {
-    return res.json(req.user);
-  }
-);
+// router.get('/restore-user', (req, res) => {
+//     return res.json(req.user);
+//   }
+// );
 
 
 // router.get(
