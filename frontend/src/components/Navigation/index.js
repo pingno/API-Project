@@ -11,9 +11,9 @@ function Navigation({ isLoaded }) {
   //header
   return (
     <>
-      <div id="header-container">
+      <div id="header-container" >
         <div  id="top-left" >
-        <img src="https://cdn3.iconfinder.com/data/icons/chinese-new-year-3/500/chinese-festival-traditional_14-512.png" className="icon"></img>
+        <img src="https://i.pinimg.com/736x/f0/e7/d4/f0e7d47ed7a68b24e04885286211c0e9--water-symbol-water-tribe.jpg" className="icon"></img>
         <h1>skybnb</h1>
         </div>
 

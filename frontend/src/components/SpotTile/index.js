@@ -19,7 +19,7 @@ export default function SpotTile({ spot }) {
           />
 
           <div className="first-row">
-            <div>{spot.city}{spot.state}</div>
+            <div>{spot.city}, {spot.state}</div>
             
             <div className="spot-review">
               <i class="fa-solid fa-star"></i>

@@ -22,6 +22,24 @@ function App() {
           <Route path="/">
             <SpotsList />
           </Route>
+          <Route path="/spots">
+
+          </Route>
+          <Route path="/spots/current">
+
+          </Route>
+          <Route path="/spots/:spotId">
+
+          </Route>
+          <Route path="/spots/:spotId/edit">
+
+          </Route>
+          <Route path="/spots/new">
+
+          </Route>
+          <Route>
+            404 Page could not be found
+          </Route>
         </Switch>
       )}
     </>
