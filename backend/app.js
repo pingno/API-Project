@@ -75,13 +75,13 @@ app.use((err, _req, _res, next) => {
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
  
-  if(err.status === 401){  // DO NOT TOUCH THIS ITS WORKING FINE
-    return res.json({
-      // title: err.title || 'Server Error',
-      message: err.message,
-      // stack: isProduction ? null : err.stack
-    });
-  }
+  // if(err.status === 401){  // DO NOT TOUCH THIS ITS WORKING FINE
+  //   return res.json({
+  //     // title: err.title || 'Server Error',
+  //     message: err.message,
+  //     // stack: isProduction ? null : err.stack
+  //   });
+  // }
   
   // if(err.status === 403){
   //   return res.json({

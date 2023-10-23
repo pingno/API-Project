@@ -1,7 +1,54 @@
-.profile-dropdown {
-    border: 1px solid red;
-}
-
 .hidden { 
     display: none
+}
+
+.profile-dropdown {
+    border: 1px solid blue;
+    cursor: pointer;
+    list-style: none;
+}
+
+.profile-button {
+    cursor: pointer;
+    border-radius: 15px;
+    height: 25px;
+    
+}
+
+
+#header-container{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid red;
+
+    height: 60px;
+
+}
+
+#top-right {
+    cursor: pointer;
+    list-style: none;
+}
+
+#top-left {
+    display: inline-flex;
+    align-items: center;
+    
+    cursor: pointer;
+    gap: 3px;
+    
+}
+
+h1{
+    font-size: 24px;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-style: italic;
+}
+
+.icon {
+    height: 45px;
+    width: 45px;
 }

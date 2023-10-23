@@ -22,14 +22,19 @@ function LoginFormModal() {
         if (data && data.errors) {
           setErrors(data.errors);
         }
+
+      // console.log("DATA ", data)
+      // console.log("ERRORS ", data.message)
+      //check your 401 error handler
       });
+
   };
 
   return (
     <div className="form-field">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit} >
-        <label >
+        {/* <label className="label"> */}
           Username or Email
           <input
             type="text"
@@ -38,8 +43,9 @@ function LoginFormModal() {
             required
             className="form-slot"
           />
-        </label>
-        <label>
+        {/* </label> */}
+        
+        {/* <label className="label"> */}
           Password
           <input
             type="password"
@@ -48,12 +54,13 @@ function LoginFormModal() {
             required
             className="form-slot"
           />
-        </label>
+        {/* </label> */}
         {errors.credential && (
           <p>{errors.credential}</p>
         )}
         <div className="form-slot"> 
-        <button type="submit">Log In</button>
+        <button type="submit" className="login-button">Log In</button>
+        <div className="demo-user">Demo User</div>
         </div>
       </form>
     </div>
