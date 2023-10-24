@@ -16,8 +16,8 @@ module.exports = {
       {
         ownerId: 1,
         address: '723 Wano',
-        city: 'Shinjuku',
-        state: 'Kyoto',
+        city: 'Okinawa',
+        state: 'Toyonaka',
         country: 'JP',
         lat: 35.6323453,
         lng: 36.2123455,
@@ -28,8 +28,8 @@ module.exports = {
       {
         ownerId: 2,
         address: '212 Sabaody',
-        city: 'Okinawa Prefecture',
-        state: 'Toyonaka',
+        city: 'Shinjuku',
+        state: 'Kyoto',
         country: 'JP',
         lat: 21.2354545,
         lng: 34.2154545,
@@ -48,6 +48,18 @@ module.exports = {
         name: 'Sakaushi House',
         description: 'Architect Taku Sakaushi designed this 50 square meter home for himself and his wife in Tokyo’s Shinjuku district. With planning regulations and restrictions, the Sakaushi house was limited to three levels. Working within his constraints, Sakaushi displays modern Japanese architecture by moving the living space to the upper floor and the work/study room to the middle level. Comfortability and the concept of leisure through the house resulted in a pause-and-go structure of stairs, creating interesting sightlines of “scenery.” ',
         price: 90
+      },
+      {
+        ownerId: 2,
+        address: '529 Laugh Tale',
+        city: 'Kiyoshi',
+        state: 'Kyoto',
+        country: 'JP',
+        lat: 46.2453545,
+        lng: 88.2154545,
+        name: 'Kame House',
+        description: 'Designed for a couple and their young children, 07BEACH took the opportunity to use an open plan for simplicity and for the sake of keeping an eye on the kids. The House in Kyoto is timber-clad and includes a tatami mat room on the first floor, paying respect to a major characteristic in Japanese architecture. To add a sentimental touch, 07BEACH placed a young tree within the double-height living room to grow alongside the children throughout the years.” ',
+        price: 200
       }
       
     ], { validate: true });
@@ -60,7 +72,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      address: { [Op.in]: ['723 Wano', '212 Sabaody', '239 Raftel'] }
+      address: { [Op.in]: ['723 Wano', '212 Sabaody', '239 Raftel', '529 Laugh Tale'] }
     }, {});
 
   }

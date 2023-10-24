@@ -27,8 +27,17 @@ function LoginFormModal() {
       // console.log("ERRORS ", data.message)
       //check your 401 error handler
       });
-
   };
+
+  const handleDemo = (e) => {
+      e.preventDefault()
+      setCredential("demo@user.io")
+      setPassword("password")
+      return dispatch(sessionActions.login({
+        credential: "demo@user.io",
+        password: "password"
+      })).then(closeModal)
+  }
 
   return (
     <div className="form-field">
@@ -61,7 +70,7 @@ function LoginFormModal() {
         <div className="form-slot"> 
         
         <button type="submit" className="login-button">Log In</button>
-        <div className="demo-user">Demo User</div>
+        <button className="demo-user" onClick={handleDemo}>Demo User</button>
         </div>
       </form>
     </div>

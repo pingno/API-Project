@@ -26,6 +26,7 @@ export default function SpotTile({ spot }) {
             <div className="spot-review">
               <i class="fa-solid fa-star"></i>
               {spot.avgRating ? spot.avgRating : <p>N/A</p>}
+            
             </div>
           </div>
 

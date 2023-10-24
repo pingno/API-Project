@@ -37,16 +37,24 @@ export default function CreateSpot() {
       name,
       price,
     };
-    if (latitude) newSpot.latitude = latitude;
-    if (longitude) newSpot.longitude = longitude;
-    if (previewImageURL) newSpot.previewImageURL = previewImageURL;
-
-    // if(imageURL1) newSpot.imageURL1 = imageURL1
-    // if(imageURL2) newSpot.imageURL2 = imageURL2
-    // if(imageURL3) newSpot.imageURL3 = imageURL3
-    // if(imageURL4) newSpot.imageURL4 = imageURL4
 
     const theSpot = await dispatchEvent(createASpot(newSpot));
+
+
+    if (latitude) newSpot.latitude = latitude;
+    if (longitude) newSpot.longitude = longitude;
+
+    // if (previewImageURL) newSpot.previewImage = previewImageURL;
+
+    // const newSpotImage = await SpotImage.create({ url, preview: true })
+    // await newSpot.addSpotImage(newSpotImage)
+
+    // if(imageURL1)
+    // if(imageURL2)
+    // if(imageURL3)
+    // if(imageURL4)
+
+    
 
     if (newSpot.errors) {
     }
@@ -84,7 +92,7 @@ export default function CreateSpot() {
           Guests will only get your exact address once they booked a reservation
         </p>
         <div>
-          <label>Country</label>
+          <label className="label">Country</label>
           <input
             type="text"
             placeholder="Country"
@@ -94,7 +102,7 @@ export default function CreateSpot() {
           {/* {errors.country && <p>{errors.country}</p>} */}
         </div>
         <div>
-          <label>Street Address</label>
+          <label className="label">Street Address</label>
           <input
             type="text"
             placeholder="Street Address"
@@ -103,19 +111,19 @@ export default function CreateSpot() {
           />
         </div>
         <div>
-          <label>City</label>
+          <label className="label">City</label>
           <input type="text" placeholder="City" onChange={setCity} required />
-          <label>State</label>
+          <label className="label">State</label>
           <input type="text" placeholder="State" onChange={setState} required />
         </div>
 
         <div>
-          <label>Latitude</label>
+          <label className="label">Latitude</label>
           <input type="text" placeholder="Latitude" onChange={setLatitude} />
-          <label>Longitude</label>
+          <label className="label">Longitude</label>
           <input type="text" placeholder="Longitude" onChange={setLongitude} />
         </div>
-
+        <div className="section-gap"/>
         <p className="section-title">Describe your place to guests</p>
         <p className="section-description">
           Mention the best features of your place, any special amentities like
@@ -127,7 +135,7 @@ export default function CreateSpot() {
           onChange={setDescription}
           required
         />
-
+        <div className="section-gap"/>
         <p className="section-title">Create a title for your spot</p>
         <p className="section-description">
           Catch guests' attention with a spot title that highlights what makes
@@ -140,7 +148,7 @@ export default function CreateSpot() {
           onChange={setName}
           required
         />
-
+        <div className="section-gap"/>
         <p className="section-title">Set a base price for your spot</p>
         <p className="section-description">
           Competitive pricing can help your listing stand out and rank higher in
@@ -152,7 +160,7 @@ export default function CreateSpot() {
           onChange={setPrice}
           required
         />
-
+        <div className="section-gap"/>
         <p className="section-title">Liven up your spot with photos</p>
         <p className="section-description">
           Submit a link to at least one photo to publish your spot
@@ -162,12 +170,13 @@ export default function CreateSpot() {
           type="url"
           placeholder="Preview Image URL"
           onChange={setPreviewImageURL}
+          className="image-input"
         />
 
-        <input type="url" placeholder="Image URL" onChange={setImageURL1} />
-        <input type="url" placeholder="Image URL" onChange={setImageURL2} />
-        <input type="url" placeholder="Image URL" onChange={setImageURL3} />
-        <input type="url" placeholder="Image URL" onChange={setImageURL4} />
+        <input type="url" placeholder="Image URL" onChange={setImageURL1} className="image-input"/>
+        <input type="url" placeholder="Image URL" onChange={setImageURL2} className="image-input"/>
+        <input type="url" placeholder="Image URL" onChange={setImageURL3} className="image-input"/>
+        <input type="url" placeholder="Image URL" onChange={setImageURL4} className="image-input"/>
 
         <div className="create-form-button">
           <button type="submit">Create Spot</button>

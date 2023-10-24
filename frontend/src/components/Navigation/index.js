@@ -27,10 +27,12 @@ function Navigation({ isLoaded }) {
         <nav>
           <ul id="top-right">
             
-            
-              <NavLink exact to="/spots/new">
-                Create a spot
-              </NavLink>
+            {sessionUser && (
+              <NavLink exact to="/spots/new" id="new-spot-link">
+              Create a New Spot
+            </NavLink>
+            )}
+              
           
 
             {isLoaded && (

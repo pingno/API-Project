@@ -13,6 +13,7 @@
 .create-form-field{
     border: 1px solid blue;
     width: 400px;
+
 }
 
 
@@ -20,8 +21,9 @@
 input {
     display: flex;
     justify-content: center;
-    width: 95%;
-    border: 2px solid black;
+    width: 98%;
+    border: 1.5px solid grey;
+    border-radius: 3px;
 }
 
 .section-title {
@@ -29,6 +31,7 @@ input {
     font-weight: bold;
 
     height: 10px;
+
 }
 
 .section-description {
@@ -38,4 +41,20 @@ input {
 .create-form-button {
     display: flex;
     justify-content: center;
+}
+
+.section-gap {
+    margin-top: 15px;
+    border: 1px solid black;
+
+}
+
+.label {
+    font-size: 12px;
+    /* margin-top: 26px; */
+    padding-left: 2px;
+}
+
+.image-input{
+    margin-bottom: 10px;
 }

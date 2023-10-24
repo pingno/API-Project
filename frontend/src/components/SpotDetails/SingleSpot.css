@@ -14,8 +14,10 @@
 } */
 
 #main-image{
-    height: 50%;
+    /* height: 50%; */
+    height: 300px;
     width: 50%;
+
 }
 
 #description-container{
@@ -33,7 +35,7 @@
     border: 2px solid black;
     width: 30%;
     height: 90px;
-
+    margin-top: 20px;
     padding-top: 15px;
 
 }

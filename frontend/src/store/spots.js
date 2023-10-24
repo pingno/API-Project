@@ -70,7 +70,7 @@ export const createASpot = (spot) => async (dispatch) => {
         const newSpot = await response.json()
         dispatch(createSpot(newSpot))
         return newSpot
-    }
+    } 
 }
 
 

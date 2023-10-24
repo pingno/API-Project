@@ -1,4 +1,4 @@
-
+import { csrfFetch } from "./csrf";
 export const RECEIVE_REVIEW = 'reviews/RECEIVE_REVIEW';
 export const RECEIVE_REVIEWS = 'reviews/RECEIVE_REVIEWS';
 export const REMOVE_REVIEW = 'reviews/REMOVE_REVIEW';
@@ -26,7 +26,7 @@ export const resetReviews = () => ({
 
 
 // export const createReview = (review, spotId) => async (dispatch) => {
-//   const req = await fetch(`/api/spots/${spotId}/reviews`, {
+//   const req = await csrfFetch(`/api/spots/${spotId}/reviews`, {
 //     method: "POST",
 //     headers: {
 //       "Content-Type": "application/json"
@@ -40,7 +40,7 @@ export const resetReviews = () => ({
 // };
 
 // export const editReview = (review) => async (dispatch) => {
-//   const req = await fetch(`/api/reviews/${review.id}`, {
+//   const req = await csrfFetch(`/api/reviews/${review.id}`, {
 //     method: "PUT",
 //     headers: {
 //       "Content-Type": "application/json"
@@ -65,7 +65,7 @@ export const resetReviews = () => ({
 // };
 
 export const getReviewsforSpot = (spotId) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spotId}/reviews`)
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 
   if(response.ok){
     const spotReviews = await response.json();
