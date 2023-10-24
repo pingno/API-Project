@@ -1,0 +1,41 @@
+.form-container{
+ 
+    display: flex;
+    /* flex-direction: column;
+    align-items: center; */
+
+    border: 1px solid red;
+
+    font-family: sans-serif;
+    justify-content: center;
+}
+
+.create-form-field{
+    border: 1px solid blue;
+    width: 400px;
+}
+
+
+
+input {
+    display: flex;
+    justify-content: center;
+    width: 95%;
+    border: 2px solid black;
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: bold;
+
+    height: 10px;
+}
+
+.section-description {
+    font-size: 11px;
+}
+
+.create-form-button {
+    display: flex;
+    justify-content: center;
+}

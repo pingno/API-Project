@@ -59,6 +59,7 @@ function LoginFormModal() {
           <p>{errors.credential}</p>
         )}
         <div className="form-slot"> 
+        
         <button type="submit" className="login-button">Log In</button>
         <div className="demo-user">Demo User</div>
         </div>

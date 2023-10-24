@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import './SpotTile.css'
 
 export default function SpotTile({ spot }) {
+  
   const history = useHistory();
 
   const handleClick = () => {
@@ -14,8 +15,9 @@ export default function SpotTile({ spot }) {
         <div className="spot-container" onClick={handleClick}>
           <img
             className="spot-image"
-            src={`${spot.previewImage}`}
-            alt={`${spot.name}`}
+            // src={`${spot.previewImage}`}
+            src={spot.previewImage}
+            alt={spot.name}
           />
 
           <div className="first-row">

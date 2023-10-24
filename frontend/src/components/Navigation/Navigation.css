@@ -3,14 +3,17 @@
 }
 
 .profile-dropdown {
-    border: 1px solid blue;
+    border: 1px solid black;
     cursor: pointer;
+    
     list-style: none;
+    text-align: left;
 
 
 }
 
 .profile-button {
+
     cursor: pointer;
     border-radius: 15px;
     height: 25px;
@@ -32,6 +35,11 @@
 }
 
 #top-right {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
     cursor: pointer;
     list-style: none;
 
@@ -45,11 +53,12 @@
     
     cursor: pointer;
     gap: 3px;
+    font-size: 10px;
     
 }
 
 h1{
-    font-size: 24px;
+    /* font-size: 24px; */
     font-family: cursive;
     /* font-style: italic; */
     color: lightblue

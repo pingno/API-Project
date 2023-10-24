@@ -25,7 +25,9 @@
 }
 
 
-.label {
-    
-
+.login-button{
+    width: 100%;
+    color: white;
+    background-color: lightcoral;
+    box-shadow: 2px 1px 1px black;
 }

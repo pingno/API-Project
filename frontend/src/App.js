@@ -6,6 +6,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 
 import SpotsList from "./components/SpotsList";
+import SpotDetails from "./components/SpotDetails";
+import CreateSpot from "./components/CreateSpot";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,27 +21,25 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/">
+
+          <Route exact path="/">
             <SpotsList />
           </Route>
-          <Route path="/spots">
 
+          <Route path="/spots/new">
+            <CreateSpot />
           </Route>
-          <Route path="/spots/current">
 
-          </Route>
           <Route path="/spots/:spotId">
-
+            <SpotDetails />
           </Route>
+
           <Route path="/spots/:spotId/edit">
 
           </Route>
-          <Route path="/spots/new">
 
-          </Route>
-          <Route>
-            404 Page could not be found
-          </Route>
+         
+          <Route>404 Page could not be found</Route>
         </Switch>
       )}
     </>

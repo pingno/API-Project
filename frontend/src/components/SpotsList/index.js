@@ -4,6 +4,8 @@ import { getAllSpots } from "../../store/spots";
 import "./SpotsList.css";
 import SpotTile from "../SpotTile";
 
+
+
 export default function SpotsList() {
   const dispatch = useDispatch();
 

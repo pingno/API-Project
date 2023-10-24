@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { createASpot } from "../../store/spots";
+import "./CreateForm.css";
 
 export default function CreateSpot() {
   const dispatch = useDispatch();
@@ -44,14 +46,14 @@ export default function CreateSpot() {
     // if(imageURL3) newSpot.imageURL3 = imageURL3
     // if(imageURL4) newSpot.imageURL4 = imageURL4
 
-    // const theSpot = await dispatchEvent(createSpot(newSpot))
+    const theSpot = await dispatchEvent(createASpot(newSpot));
 
-    if (theSpot.errors) {
+    if (newSpot.errors) {
     }
 
-    if (theSpot) {
+    if (newSpot) {
       setErrorMessages({});
-      history.push(`/spots/${theSpot.id}`);
+      history.push(`/spots/${newSpot.id}`);
       reset();
     }
   };
@@ -73,26 +75,23 @@ export default function CreateSpot() {
   };
 
   return (
-    <section>
-      <h1>Create a new Spot</h1>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} className="create-form-field">
+        <h1>Create a new Spot</h1>
 
-      <p>Where's your place located?</p>
-      <p>
-        Guests will only get your exact address once they booked a reservation
-      </p>
-
-      <form onSubmit={handleSubmit}>
+        <p className="section-title">Where's your place located?</p>
+        <p className="section-description">
+          Guests will only get your exact address once they booked a reservation
+        </p>
         <div>
-          <label>
-            Country
-            <input
-              type="text"
-              placeholder="Country"
-              onChange={setCountry}
-              required
-            />
-          </label>
-          {errors.country && <p>{errors.country}</p>}
+          <label>Country</label>
+          <input
+            type="text"
+            placeholder="Country"
+            onChange={setCountry}
+            required
+          />
+          {/* {errors.country && <p>{errors.country}</p>} */}
         </div>
         <div>
           <label>Street Address</label>
@@ -117,56 +116,63 @@ export default function CreateSpot() {
           <input type="text" placeholder="Longitude" onChange={setLongitude} />
         </div>
 
-        <button type="submit">Create Spot</button>
+        <p className="section-title">Describe your place to guests</p>
+        <p className="section-description">
+          Mention the best features of your place, any special amentities like
+          fast wifi or parking, and what you love about the neighborhood
+        </p>
+        <input
+          type="text"
+          placeholder="Description"
+          onChange={setDescription}
+          required
+        />
+
+        <p className="section-title">Create a title for your spot</p>
+        <p className="section-description">
+          Catch guests' attention with a spot title that highlights what makes
+          your place special
+        </p>
+
+        <input
+          type="text"
+          placeholder="Name of your spot"
+          onChange={setName}
+          required
+        />
+
+        <p className="section-title">Set a base price for your spot</p>
+        <p className="section-description">
+          Competitive pricing can help your listing stand out and rank higher in
+          search results
+        </p>
+        <input
+          type="number"
+          placeholder="Price per night (USD)"
+          onChange={setPrice}
+          required
+        />
+
+        <p className="section-title">Liven up your spot with photos</p>
+        <p className="section-description">
+          Submit a link to at least one photo to publish your spot
+        </p>
+
+        <input
+          type="url"
+          placeholder="Preview Image URL"
+          onChange={setPreviewImageURL}
+        />
+
+        <input type="url" placeholder="Image URL" onChange={setImageURL1} />
+        <input type="url" placeholder="Image URL" onChange={setImageURL2} />
+        <input type="url" placeholder="Image URL" onChange={setImageURL3} />
+        <input type="url" placeholder="Image URL" onChange={setImageURL4} />
+
+        <div className="create-form-button">
+          <button type="submit">Create Spot</button>
+        </div>
       </form>
-
-      <p>Describe your place to guests</p>
-      <p>
-        Mention the best features of your place, any special amentities like
-        fast wifi or parking, and what you love about the neighborhood
-      </p>
-      <input
-        type="text"
-        placeholder="Description"
-        onChange={setDescription}
-        required
-      />
-
-      <p>Create a title for your spot</p>
-      <p>
-        Catch guests' attention with a spot title that highlights what makes
-        your place special
-      </p>
-      <input
-        type="text"
-        placeholder="Name of your spot"
-        onChange={setName}
-        required
-      />
-
-      <p>Set a base price for your spot</p>
-      <p>
-        Competitive pricing can help your listing stand out and rank higher in
-        search results
-      </p>
-      <input
-        type="number"
-        placeholder="Price per night (USD)"
-        onChange={setPrice}
-        required
-      />
-
-      <p>Liven up your spot with photos</p>
-      <p>Submit a link to at least one photo to publish your spot</p>
-      <input
-        type="url"
-        placeholder="Preview Image URL"
-        onChange={setPreviewImageURL}
-      />
-      <input type="url" placeholder="Image URL" onChange={setImageURL1} />
-      <input type="url" placeholder="Image URL" onChange={setImageURL2} />
-      <input type="url" placeholder="Image URL" onChange={setImageURL3} />
-      <input type="url" placeholder="Image URL" onChange={setImageURL4} />
-    </section>
+    </div>
   );
 }

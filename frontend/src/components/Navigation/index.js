@@ -1,30 +1,37 @@
 // frontend/src/components/Navigation/index.js
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
+  const history = useHistory()
+
+  const redirectHome = (e) => {
+    e.preventDefault()
+
+    history.push('/')
+  }
 
   //header
   return (
     <>
       <div id="header-container" >
-        <div  id="top-left" >
-        <img src="https://i.pinimg.com/736x/f0/e7/d4/f0e7d47ed7a68b24e04885286211c0e9--water-symbol-water-tribe.jpg" className="icon"></img>
+        <div  id="top-left" onClick={redirectHome}>
+        <img src="https://res.cloudinary.com/american-bath-group/image/upload/v1647346547/websites-product-info-and-content/shared/lookups/thumbnails/clarion-air-massage-icon.jpg" className="icon"></img>
         <h1>skybnb</h1>
         </div>
 
         <nav>
           <ul id="top-right">
             
-            {/* <li>
-              <NavLink exact to="/">
-                Home
+            
+              <NavLink exact to="/spots/new">
+                Create a spot
               </NavLink>
-            </li> */}
+          
 
             {isLoaded && (
               <li>
