@@ -18,6 +18,7 @@ export default function CreateSpot() {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+
   const [previewImageURL, setPreviewImageURL] = useState("");
   const [imageURL1, setImageURL1] = useState("");
   const [imageURL2, setImageURL2] = useState("");
@@ -25,11 +26,13 @@ export default function CreateSpot() {
   const [imageURL4, setImageURL4] = useState("");
   const [errors, setErrors] = useState({});
 
+  const [submitted, yesSubmitted] = useState(false);
+
   if (!user) {
     history.replace("/");
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const newSpot = {
@@ -41,39 +44,38 @@ export default function CreateSpot() {
       description,
       name,
       price,
-      previewImage: previewImageURL,
     };
 
     if (latitude) newSpot.lat = latitude;
     if (longitude) newSpot.lng = longitude;
 
-    //   const theSpot = await dispatch(createASpot(newSpot))
-    //  console.log(theSpot)
+   let spotImages = [previewImageURL];
 
-try {
-  await dispatch(createASpot(newSpot));
-} catch (e) {
-  const error = await e.json()
-  setErrors(error.errors);
-  console.log(error)
-}
- 
-    // const newSpotImage = await SpotImage.create({ url, preview: true })
-    // await newSpot.addSpotImage(newSpotImage)
+    if (imageURL1) spotImages.push(imageURL1);
+    if (imageURL2) spotImages.push(imageURL2);
+    if (imageURL3) spotImages.push(imageURL3);
+    if (imageURL4) spotImages.push(imageURL4);
 
-    // if(imageURL1)
-    // if(imageURL2)
-    // if(imageURL3)
-    // if(imageURL4)
 
-    // if (newSpot.errors) {
+    console.log("SPOT IMAGES ", spotImages)
+    console.log(" SPOT IMAGES LENGTH ", spotImages.length)
+
+    // try {
+
+     dispatch(createASpot(newSpot, spotImages))
+      .then((newSpotId) => {
+        history.push(`/spots/${newSpotId}`);
+      });
+
+    // } catch (e) {
+    //   const error = await e.json();
+    //   setErrors(error.errors);
+    //   console.log(error);
     // }
 
-    // if (newSpot) {
-    //   setErrors({});
-    //   history.push(`/spots/${newSpot.id}`);
-    //   reset();
-    // }
+
+    yesSubmitted(true)
+
   };
 
   const reset = () => {
@@ -93,6 +95,12 @@ try {
     setImageURL4("");
   };
 
+  useEffect(() => {
+    yesSubmitted(false);
+    reset();
+    setErrors({});
+  }, [submitted]);
+
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} className="create-form-field">
@@ -111,7 +119,9 @@ try {
             onChange={(e) => setCountry(e.target.value)}
             required
           />
-          {/* {errors.country && <p>{errors.country}</p>} */}
+          {errors.country && (
+            <p style={{ fontSize: "10px", color: "red" }}>*{errors.country}</p>
+          )}
         </div>
         <div>
           <label className="label">Street Address</label>
@@ -122,21 +132,56 @@ try {
             onChange={(e) => setAddress(e.target.value)}
             required
           />
+          {errors.address && (
+            <p style={{ fontSize: "10px", color: "red" }}>*{errors.address}</p>
+          )}
         </div>
         <div>
           <label className="label">City</label>
-          <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} required />
+          <input
+            type="text"
+            placeholder="City"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            required
+          />
+          {errors.city && (
+            <p style={{ fontSize: "10px", color: "red" }}>*{errors.city}</p>
+          )}
           <label className="label">State</label>
-          <input type="text" placeholder="State" value={state} onChange={(e) => setState(e.target.value)} required />
+          <input
+            type="text"
+            placeholder="State"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            required
+          />
+          {errors.state && (
+            <p style={{ fontSize: "10px", color: "red" }}>*{errors.state}</p>
+          )}
         </div>
 
         <div>
           <label className="label">Latitude</label>
-          <input type="text" placeholder="Latitude" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
-          {errors.lat && <p style={{fontSize: "8px", color: "red"}}>{errors.lat}</p>}
+          <input
+            type="text"
+            placeholder="Latitude"
+            value={latitude}
+            onChange={(e) => setLatitude(e.target.value)}
+          />
+          {errors.lat && (
+            <p style={{ fontSize: "10px", color: "red" }}>{errors.lat}</p>
+          )}
           <label className="label">Longitude</label>
-          <input type="text" placeholder="Longitude" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
-          {errors.lng && <p style={{fontSize: "8px", color: "red"}}>{errors.lng}</p>}
+          <input
+            type="text"
+            placeholder="Longitude"
+            value={longitude}
+            onChange={(e) => setLongitude(e.target.value)}
+          />
+          {errors.lng && (
+            <p style={{ fontSize: "10px", color: "red" }}>{errors.lng}</p>
+          )}
         </div>
         <div className="section-gap" />
         <p className="section-title">Describe your place to guests</p>
@@ -152,6 +197,11 @@ try {
           id="input-textarea"
           required
         />
+        {errors.description && (
+          <p style={{ fontSize: "10px", color: "red" }}>
+            *{errors.description}
+          </p>
+        )}
         <div className="section-gap" />
         <p className="section-title">Create a title for your spot</p>
         <p className="section-description">
@@ -166,6 +216,10 @@ try {
           onChange={(e) => setName(e.target.value)}
           required
         />
+        {errors.name && (
+          <p style={{ fontSize: "10px", color: "red" }}>*{errors.name}</p>
+        )}
+
         <div className="section-gap" />
         <p className="section-title">Set a base price for your spot</p>
         <p className="section-description">
@@ -174,7 +228,7 @@ try {
         </p>
 
         {errors.price && (
-          <p style={{ fontSize: "8px", color: "red" }}>*{errors.price}</p>
+          <p style={{ fontSize: "10px", color: "red" }}>*{errors.price}</p>
         )}
         <input
           type="number"
@@ -196,6 +250,9 @@ try {
           onChange={(e) => setPreviewImageURL(e.target.value)}
           className="image-input"
         />
+        {errors.url && (
+          <p style={{ fontSize: "10px", color: "red" }}>*{errors.url}</p>
+        )}
 
         <input
           type="url"

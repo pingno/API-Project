@@ -236,8 +236,8 @@ router.post('/', requireAuth, async (req, res) => {
     if(!city) errorList.city = "City is required"
     if(!state) errorList.state = "State is required"
     if(!country) errorList.country = "Country is required"
-    if(!lat || isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
-    if(!lng || isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
+    if(lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
+    if(lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
     if(!name || name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
     if(!description) errorList.description = "Description is required"
     if(!price || price < 1) errorList.price = "Price per day is required"
@@ -274,9 +274,7 @@ if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.p
 
     const { user } = req
     const { url, preview } = req.body
-    const spot = await Spot.findOne({
-        where: { ownerId: user.id }
-    })
+    const spot = await Spot.findByPk(req.params.spotId)
 
 
     const newSpotImage = await SpotImage.create({ url, preview })
@@ -310,8 +308,8 @@ router.put('/:spotId', requireAuth, reqAuthorization, async(req,res) => {
     if(!city) errorList.city = "City is required"
     if(!state) errorList.state = "State is required"
     if(!country) errorList.country = "Country is required"
-    if(!lat || isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
-    if(!lng || isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
+    if(lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
+    if(lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
     if(!name || name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
     if(!description) errorList.description = "Description is required"
     if(!price || price < 1) errorList.price = "Price per day is required"

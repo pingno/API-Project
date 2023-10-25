@@ -19,6 +19,8 @@ export default function SpotDetails() {
 
 
   if (!theSpot?.Owner && !theSpot?.numReviews) return null;
+  
+  // if(!theSpot?.SpotImages) return null
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -41,19 +43,17 @@ export default function SpotDetails() {
         <h4 id="second-row-details">
           {theSpot.city}, {theSpot.state}, {theSpot.country}
         </h4>
+        
         <div id="images-banner">
           {theSpot.SpotImages.length > 0 && <img id="main-image" src={theSpot.SpotImages[0].url}/> }
         </div>
 
         {/* right column images */}
-        {/* <img src={theSpot.previewImage} />
-      <img src={theSpot.previewImage} />
-      <img src={theSpot.previewImage} />
-      <img src={theSpot.previewImage} /> */}
+
 
         <div id="description-container">
           <div id="description-left-column">
-            {/* <p>Hosted by {theSpot.Owner.firstName} {theSpot.Owner.lastName}</p> */}
+            <p>Hosted by {theSpot.Owner.firstName} {theSpot.Owner.lastName}</p>
             <div>{theSpot.description}</div>
           </div>
 
@@ -63,7 +63,13 @@ export default function SpotDetails() {
 
               <div id="star">
                 <i className="fa-solid fa-star"></i>
-                <div id="avg-rating">{theSpot.avgRating}</div>
+
+                {theSpot.avgRating ?
+                (<div id="avg-rating">{theSpot.avgRating.toFixed(1)}</div>
+                // {Post your review} also if NOT the owner
+                ) 
+                : "New"}
+
                 {oneReview && <div> · {oneReview} Review</div>}
                 {moreReviews && <div> · {moreReviews} Reviews</div>}
               </div>
