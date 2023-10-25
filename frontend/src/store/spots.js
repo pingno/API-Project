@@ -7,27 +7,27 @@ const EDIT_SPOT = 'spots/EDIT_SPOT'
 const DELETE_SPOT = 'spots/DELETE_SPOT'
 
 
-export const getTheSpot = (spot) => ({
+const getTheSpot = (spot) => ({
     type: GET_SPOT,
     spot
 })
 
-export const getSpots = (spots) => ({
+const getSpots = (spots) => ({
     type: GET_ALL_SPOTS,
     spots
 })
 
-export const createSpot = (spot) => ({
+const createSpot = (spot) => ({
     type: ADD_SPOT,
     spot
 })
 
-export const editSpot = (spot) => ({
+const editSpot = (spot) => ({
     type: EDIT_SPOT,
     spot
 })
 
-export const deleteSpot = (spot) => ({
+ const deleteSpot = (spot) => ({
     type: DELETE_SPOT,
     spot
 })
@@ -57,20 +57,25 @@ export const getAllSpots = () => async (dispatch) => {
 }
 
 //Create a new spot
-export const createASpot = (spot) => async (dispatch) => {
+export const createASpot = (payload) => async (dispatch) => {
+
+    console.log( "PAYLOAD ", payload)
     const response = await csrfFetch(`/api/spots`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(spot)
+        body: JSON.stringify(payload)
     })
 
     if(response.ok) {
-        const newSpot = await response.json()
-        dispatch(createSpot(newSpot))
-        return newSpot
-    } 
+        const spot = await response.json()
+        dispatch(createSpot(spot))
+        return spot
+    } else {
+        const errors = await response.json();
+        return errors;
+    }
 }
 
 
@@ -79,12 +84,10 @@ const spotsReducer = (state = {}, action) => {
 
         //All Spots
         case GET_ALL_SPOTS:
-            console.log("ACTION SPOTS",action.spots)
         const allSpots = {}
         action.spots.Spots.forEach(spot => {
             allSpots[spot.id] = spot
         })
-
         return allSpots
         //Get A Spot
         case GET_SPOT:

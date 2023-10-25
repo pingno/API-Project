@@ -1,28 +1,22 @@
 import { csrfFetch } from "./csrf";
-export const RECEIVE_REVIEW = 'reviews/RECEIVE_REVIEW';
-export const RECEIVE_REVIEWS = 'reviews/RECEIVE_REVIEWS';
-export const REMOVE_REVIEW = 'reviews/REMOVE_REVIEW';
-export const RESET_REVIEWS = 'reviews/RESET_REVIEWS';
 
-export const receiveReview = review => ({
-  type: RECEIVE_REVIEW,
-  review
-});
+const GET_REVIEWS = 'reviews/GET_REVIEWS';
+// export const REMOVE_REVIEW = 'reviews/REMOVE_REVIEW';
+// export const RESET_REVIEWS = 'reviews/RESET_REVIEWS';
 
-export const receiveReviews = reviews => ({
-  type: RECEIVE_REVIEWS,
+const getReviews = reviews => ({
+  type: GET_REVIEWS,
   reviews
 });
 
-export const removeReview = reviewId => ({
-  type: REMOVE_REVIEW,
-  reviewId
-});
+// const removeReview = reviewId => ({
+//   type: REMOVE_REVIEW,
+//   reviewId
+// });
 
-export const resetReviews = () => ({
-  type: RESET_REVIEWS,
-});
-
+// const resetReviews = () => ({
+//   type: RESET_REVIEWS,
+// });
 
 
 // export const createReview = (review, spotId) => async (dispatch) => {
@@ -69,48 +63,23 @@ export const getReviewsforSpot = (spotId) => async (dispatch) => {
 
   if(response.ok){
     const spotReviews = await response.json();
-    dispatch(receiveReviews(spotId))
+    dispatch(getReviews(spotReviews))
     return spotReviews
-  }
+  } 
 
 }
 
 
-
-export const getAllReviews = state => {
-  return state?.reviews ? Object.values(state.reviews) : [];
-};
-
-// export const getReviewsForSpot = spotId => state => {
-//   return state?.reviews ? Object.values(state.reviews).filter(review => review.petId === petId) : [];
-// };
-
-export const getReview = reviewId => state => {
-  return state?.reviews ? state.reviews[reviewId] : null;
-};
-
 const reviewsReducer = (state = {}, action) => {
   switch (action.type) {
-    case RECEIVE_REVIEW:
-      return { ...state, [action.review.id]: action.review };
-    case RECEIVE_REVIEWS:
-      return { ...state, ...action.reviews };
-    case REMOVE_REVIEW: {
-      const newState = { ...state };
-      delete newState[action.reviewId];
-      return newState;
-    }
-    // case REMOVE_PET: {
-    //   const newState = { ...state };
-    //   for (let review of state) {
-    //     if (review.petId === action.petId) {
-    //       delete newState[review.id];
-    //     }
-    //   }
-    //   return newState;
-    // }
-    case RESET_REVIEWS:
-      return {};
+
+    case GET_REVIEWS:
+      const newState = {}
+      action.reviews.Reviews.forEach(review => {
+        newState[review.id] = review
+      })
+    return newState
+
     default:
       return state;
   }

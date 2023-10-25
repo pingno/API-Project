@@ -12,7 +12,7 @@ export default function SpotTile({ spot }) {
   return (
     <>
       {/* <li key={spot.id}> */}
-        <div className="spot-container" onClick={handleClick}>
+        <div className="spot-container" onClick={handleClick} key={spot.id} title={spot.name}>
           <img
             className="spot-image"
             // src={`${spot.previewImage}`}
@@ -24,14 +24,14 @@ export default function SpotTile({ spot }) {
             <div>{spot.city}, {spot.state}</div>
             
             <div className="spot-review">
-              <i class="fa-solid fa-star"></i>
-              {spot.avgRating ? spot.avgRating : <p>N/A</p>}
+              <i className="fa-solid fa-star"></i>
+              {spot.avgRating ? spot.avgRating.toFixed(1) : <p>New</p>}
             
             </div>
           </div>
 
           <div className="second-row spot-pricing">
-            <div>${spot.price}</div>
+            <label>${spot.price} night</label>
           </div>
         </div>
       {/* </li> */}

@@ -68,3 +68,7 @@
 #star{
     display: flex;
 }
+
+#avg-rating{
+    padding-right: 5px;
+}

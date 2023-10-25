@@ -19,6 +19,7 @@ export default function SpotsList() {
 
   if (!spots) return null;
 
+  
   return (
     <div className="spotlist-container">
       {spots.map((spot) => {

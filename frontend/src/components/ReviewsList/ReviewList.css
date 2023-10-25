@@ -1,0 +1,22 @@
+.review-header {
+    display: flex;
+    margin: 10px 15px;
+}
+
+.reviews-list-container {
+    margin: 5px 15px;
+}
+
+.review-tile{
+    padding: 5px 0px;
+}
+
+.review-first-name{
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 0px;
+}
+
+.review-date{
+    color: 1px solid lightgrey
+}
