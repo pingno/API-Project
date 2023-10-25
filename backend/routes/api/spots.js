@@ -206,9 +206,7 @@ router.get('/:spotId', async (req, res, next) => {
 
     const spotJSON = spot.toJSON()
 
-    const user = await User.findOne({
-        raw: true,
-        where: { id: req.params.spotId },
+    const user = await spot.getUser({
         attributes: ['id','firstName','lastName']
     })
 

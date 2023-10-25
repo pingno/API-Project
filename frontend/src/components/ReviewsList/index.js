@@ -13,8 +13,8 @@ export default function Reviews({ theSpot }) {
   const spotReviewsObj = useSelector((state) => state.reviews);
   const spotReviewsArr = Object.values(spotReviewsObj);
 
-  // console.log(" SPOT REVIEWS OBJ", spotReviewsObj);
-  // console.log("SPOT REVIEWS ARR ", spotReviewsArr);
+  console.log(" SPOT REVIEWS OBJ", spotReviewsObj);
+  console.log("SPOT REVIEWS ARR ", spotReviewsArr);
 
   let oneReview;
   let moreReviews;
@@ -23,10 +23,10 @@ export default function Reviews({ theSpot }) {
 
   useEffect(() => {
     dispatch(getReviewsforSpot(theSpot.id));
-  }, [dispatch, theSpot.id]);
+  }, [dispatch, theSpot]);
 
 
-  if (spotReviewsArr.length === 0) return null;
+  if (!spotReviewsArr) return null;
 
   return ( 
     <>

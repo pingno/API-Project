@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './SpotTile.css'
 
 export default function SpotTile({ spot }) {
@@ -8,11 +9,12 @@ export default function SpotTile({ spot }) {
   const handleClick = () => {
     history.push(`/spots/${spot.id}`);
   };
-
+  
   return (
     <>
       {/* <li key={spot.id}> */}
-        <div className="spot-container" onClick={handleClick} key={spot.id} title={spot.name}>
+  
+        <div className="spot-container"  key={spot.id} onClick={handleClick} title={spot.name}>
           <img
             className="spot-image"
             // src={`${spot.previewImage}`}
@@ -34,6 +36,7 @@ export default function SpotTile({ spot }) {
             <label>${spot.price} night</label>
           </div>
         </div>
+
       {/* </li> */}
     </>
   );

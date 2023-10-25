@@ -22,15 +22,7 @@ const createSpot = (spot) => ({
     spot
 })
 
-const editSpot = (spot) => ({
-    type: EDIT_SPOT,
-    spot
-})
 
- const deleteSpot = (spot) => ({
-    type: DELETE_SPOT,
-    spot
-})
 
 //Get Spot by Id
 export const getSpot = (spotId) => async (dispatch) => {
@@ -78,6 +70,7 @@ export const createASpot = (payload) => async (dispatch) => {
     }
 }
 
+let newState;
 
 const spotsReducer = (state = {}, action) => {
     switch(action.type) {
@@ -89,22 +82,27 @@ const spotsReducer = (state = {}, action) => {
             allSpots[spot.id] = spot
         })
         return allSpots
+
         //Get A Spot
         case GET_SPOT:
-        return {...state, [action.spot.id]: action.spot} //check
+            {
+                return {...state, [action.spot.id]: {...action.spot}} //check
+            }
+        
 
         //Create A Spot
         case ADD_SPOT:
-            return {...state, [action.spot.id]: action.spot}
+            newState = {...state, [action.spot.id]: action.spot}
+        return newState;
         //Edit A Spot
-        case EDIT_SPOT:
+        // case EDIT_SPOT:
             
-            return {...state}
+        //     return {...state}
         //delete a spot
-        case DELETE_SPOT:
-            const newState = { ...state }
-            delete newState[action.spotId]
-            return newState
+        // case DELETE_SPOT:
+        //     const newState = { ...state }
+        //     delete newState[action.spotId]
+        //     return newState
         default:
             return state;
 

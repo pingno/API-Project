@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getSpot } from "../../store/spots";
 import "./SingleSpot.css";
-import Reviews from "../ReviewsList/index";
+import Reviews from "../ReviewsList";
 
 
 export default function SpotDetails() {
@@ -11,23 +11,28 @@ export default function SpotDetails() {
   const { spotId } = useParams();
 
   const theSpot = useSelector((state) => state.spots[spotId]);
-  console.log('A SPOT', theSpot)
+  console.log("A SPOT", theSpot);
 
   useEffect(() => {
     dispatch(getSpot(spotId));
   }, [dispatch]);
 
-  if (!theSpot) return null;
+
+  if (!theSpot?.Owner && !theSpot?.numReviews) return null;
 
   const handleClick = async (e) => {
     e.preventDefault();
     alert("Feature coming soon!");
   };
 
+
+
   let oneReview;
   let moreReviews;
   if (theSpot.numReviews == 1) oneReview = theSpot.numReviews;
   if (theSpot.numReviews > 1) moreReviews = theSpot.numReviews;
+
+ 
 
   return (
     <>
@@ -37,7 +42,7 @@ export default function SpotDetails() {
           {theSpot.city}, {theSpot.state}, {theSpot.country}
         </h4>
         <div id="images-banner">
-          {/* <img id="main-image" src={theSpot.SpotImages[0].url} /> */}
+          {theSpot.SpotImages.length > 0 && <img id="main-image" src={theSpot.SpotImages[0].url}/> }
         </div>
 
         {/* right column images */}
@@ -48,7 +53,7 @@ export default function SpotDetails() {
 
         <div id="description-container">
           <div id="description-left-column">
-            <p>Hosted by {theSpot.Owner.firstName} {theSpot.Owner.lastName}</p>
+            {/* <p>Hosted by {theSpot.Owner.firstName} {theSpot.Owner.lastName}</p> */}
             <div>{theSpot.description}</div>
           </div>
 
@@ -70,9 +75,9 @@ export default function SpotDetails() {
             </div>
           </div>
         </div>
-
       </div>
 
+      
       <div>
         <Reviews theSpot={theSpot} />
       </div>
