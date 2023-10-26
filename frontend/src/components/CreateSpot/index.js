@@ -28,10 +28,6 @@ export default function CreateSpot() {
 
   const [submitted, yesSubmitted] = useState(false);
 
-  if (!user) {
-    history.replace("/");
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -57,22 +53,10 @@ export default function CreateSpot() {
     if (imageURL4) spotImages.push(imageURL4);
 
 
-    console.log("SPOT IMAGES ", spotImages)
-    console.log(" SPOT IMAGES LENGTH ", spotImages.length)
-
-    // try {
-
      dispatch(createASpot(newSpot, spotImages))
       .then((newSpotId) => {
         history.push(`/spots/${newSpotId}`);
       });
-
-    // } catch (e) {
-    //   const error = await e.json();
-    //   setErrors(error.errors);
-    //   console.log(error);
-    // }
-
 
     yesSubmitted(true)
 

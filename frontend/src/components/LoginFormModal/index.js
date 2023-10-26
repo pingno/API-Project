@@ -45,7 +45,7 @@ function LoginFormModal() {
     <div className="form-field">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit} >
-        {/* <label className="label"> */}
+       
           Username or Email
           <input
             type="text"
@@ -54,9 +54,7 @@ function LoginFormModal() {
             required
             className="form-slot"
           />
-        {/* </label> */}
-        
-        {/* <label className="label"> */}
+      
           Password
           <input
             type="password"
@@ -65,9 +63,9 @@ function LoginFormModal() {
             required
             className="form-slot"
           />
-        {/* </label> */}
+ 
         {errors.credential && (
-          <p>{errors.credential}</p>
+          <p style={{ fontSize: "10px", color: "red" }}>{errors.credential}</p>
         )}
         <div className="form-slot"> 
         

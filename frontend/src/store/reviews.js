@@ -1,6 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 const GET_REVIEWS = 'reviews/GET_REVIEWS';
+const ADD_REVIEW = 'review/ADD_REVIEW'
 // export const REMOVE_REVIEW = 'reviews/REMOVE_REVIEW';
 // export const RESET_REVIEWS = 'reviews/RESET_REVIEWS';
 
@@ -9,29 +10,18 @@ const getReviews = reviews => ({
   reviews
 });
 
+const addReview = review => ({
+  type: ADD_REVIEW,
+  review
+})
+
 // const removeReview = reviewId => ({
 //   type: REMOVE_REVIEW,
 //   reviewId
 // });
 
-// const resetReviews = () => ({
-//   type: RESET_REVIEWS,
-// });
 
 
-// export const createReview = (review, spotId) => async (dispatch) => {
-//   const req = await csrfFetch(`/api/spots/${spotId}/reviews`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({ review })
-//   });
-//   const data = await req.json();
-//   const createdReview = data;
-//   dispatch(receiveReview(createdReview));
-//   return createdReview;
-// };
 
 // export const editReview = (review) => async (dispatch) => {
 //   const req = await csrfFetch(`/api/reviews/${review.id}`, {
@@ -66,20 +56,42 @@ export const getReviewsforSpot = (spotId) => async (dispatch) => {
     dispatch(getReviews(spotReviews))
     return spotReviews
   } 
-
 }
 
+export const createReview = (review, spotId) => async (dispatch) => {
+  const req = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ review })
+  });
+
+  const createdReview = await req.json();
+  dispatch(addReview(createdReview));
+  return createdReview;
+};
+
+
+
+
+let newState
 
 const reviewsReducer = (state = {}, action) => {
   switch (action.type) {
 
     case GET_REVIEWS:
-      const newState = {}
+      newState = {}
       action.reviews.Reviews.forEach(review => {
         newState[review.id] = review
       })
+
     return newState
 
+    case ADD_REVIEW:
+      return newState = { ...state, [action.review.id]: action.review };
+    
+  
     default:
       return state;
   }

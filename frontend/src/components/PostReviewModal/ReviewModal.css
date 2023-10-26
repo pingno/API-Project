@@ -1,0 +1,63 @@
+.post-review-block{
+    margin: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.post-review-block div{
+    padding: 2px;
+}
+
+.post-review-header{
+
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 10px;
+    color: lightskyblue
+
+}
+
+.review-text{
+    height: 75px;
+    width: 200px;
+    border: 2px solid black;
+    background-color: rgb(216, 245, 255)
+
+}
+
+.review-button{
+    width: 175px;
+    height: 40px;
+    font-size: 11px;
+    background-color: lightcoral;
+    color: white;
+    box-shadow: 3px 2px 2px black;
+    border: 2px solid black;
+}
+
+.stars-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.stars-row div{
+    margin: 2px;
+}
+
+.review-star{
+
+}
+
+.text-star{
+
+}
+
+.review-star {
+
+}
+  
+.review-star:hover {
+   color: white; /* Hovered star color */
+}

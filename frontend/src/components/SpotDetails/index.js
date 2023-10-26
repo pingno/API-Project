@@ -5,21 +5,19 @@ import { getSpot } from "../../store/spots";
 import "./SingleSpot.css";
 import Reviews from "../ReviewsList";
 
-
 export default function SpotDetails() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-
   const theSpot = useSelector((state) => state.spots[spotId]);
-  console.log("A SPOT", theSpot);
+  // const sessionUser = useSelector((state) => state.session.user);
+
+  // console.log("THE SPOT", theSpot);
 
   useEffect(() => {
     dispatch(getSpot(spotId));
   }, [dispatch]);
 
-
   if (!theSpot?.Owner && !theSpot?.numReviews) return null;
-  
   // if(!theSpot?.SpotImages) return null
 
   const handleClick = async (e) => {
@@ -27,14 +25,10 @@ export default function SpotDetails() {
     alert("Feature coming soon!");
   };
 
-
-
   let oneReview;
   let moreReviews;
   if (theSpot.numReviews == 1) oneReview = theSpot.numReviews;
   if (theSpot.numReviews > 1) moreReviews = theSpot.numReviews;
-
- 
 
   return (
     <>
@@ -43,17 +37,22 @@ export default function SpotDetails() {
         <h4 id="second-row-details">
           {theSpot.city}, {theSpot.state}, {theSpot.country}
         </h4>
-        
-        <div id="images-banner">
-          {theSpot.SpotImages.length > 0 && <img id="main-image" src={theSpot.SpotImages[0].url}/> }
-        </div>
 
-        {/* right column images */}
+        <div id="images-container">
+
+          <img className="img0" src={theSpot.SpotImages[0].url} />
+          {theSpot.SpotImages[1] && <img className="img1" src={theSpot.SpotImages[1].url} />}
+          {theSpot.SpotImages[2] && <img className="img2" src={theSpot.SpotImages[2].url} />}
+          {theSpot.SpotImages[3] && <img className="img3" src={theSpot.SpotImages[3].url} />}
+          {theSpot.SpotImages[4] && <img className="img4" src={theSpot.SpotImages[4].url} />}
+        </div>
 
 
         <div id="description-container">
           <div id="description-left-column">
-            <p>Hosted by {theSpot.Owner.firstName} {theSpot.Owner.lastName}</p>
+            <p>
+              Hosted by {theSpot.Owner.firstName} {theSpot.Owner.lastName}
+            </p>
             <div>{theSpot.description}</div>
           </div>
 
@@ -64,11 +63,9 @@ export default function SpotDetails() {
               <div id="star">
                 <i className="fa-solid fa-star"></i>
 
-                {theSpot.avgRating ?
-                (<div id="avg-rating">{theSpot.avgRating.toFixed(1)}</div>
-                // {Post your review} also if NOT the owner
-                ) 
-                : "New"}
+                {theSpot.avgRating ? (
+                  <div id="avg-rating">{theSpot.avgRating.toFixed(1)}</div>
+                ) : (<div style={{ fontSize: "12px", color: "red", paddingTop: "2px", paddingLeft: "2px" }}>New!</div>)}
 
                 {oneReview && <div> · {oneReview} Review</div>}
                 {moreReviews && <div> · {moreReviews} Reviews</div>}
@@ -84,9 +81,8 @@ export default function SpotDetails() {
       </div>
 
       
-      <div>
         <Reviews theSpot={theSpot} />
-      </div>
+      
     </>
   );
 }

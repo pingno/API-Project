@@ -3,10 +3,7 @@ import { csrfFetch } from "./csrf";
 const GET_SPOT = "spots/GET_SPOT";
 const GET_ALL_SPOTS = "spots/GET_ALL_SPOTS";
 const ADD_SPOT = "spots/ADD_SPOT";
-const EDIT_SPOT = "spots/EDIT_SPOT";
-const DELETE_SPOT = "spots/DELETE_SPOT";
-const USER_SPOTS = "user/spots/";
-const ADD_IMAGE = "spots/ADD_IMAGE";
+
 
 const getTheSpot = (spot) => ({
   type: GET_SPOT,
@@ -23,11 +20,7 @@ const createSpot = (spot) => ({
   spot,
 });
 
-//add image
-const addImage = (payload) => ({
-  type: ADD_IMAGE,
-  payload,
-});
+
 
 //Get Spot by Id
 export const getSpot = (spotId) => async (dispatch) => {
@@ -52,26 +45,6 @@ export const getAllSpots = () => async (dispatch) => {
   }
 };
 
-//Create a new spot
-// export const createASpot = (payload) => async (dispatch) => {
-//   console.log("PAYLOAD ", payload);
-//   const response = await csrfFetch(`/api/spots`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(payload),
-//   });
-
-//   if (response.ok) {
-//     const spot = await response.json();
-//     dispatch(createSpot(spot));
-//     return spot;
-//   } else {
-//     const errors = await response.json();
-//     return errors;
-//   }
-// };
 
 export const createASpot = (spot, spotImages) => async (dispatch) => {
 
@@ -121,11 +94,11 @@ const spotsReducer = (state = {}, action) => {
   switch (action.type) {
     //All Spots
     case GET_ALL_SPOTS:
-      const allSpots = {};
+      newState = {};
       action.spots.Spots.forEach((spot) => {
-        allSpots[spot.id] = spot;
+        newState[spot.id] = spot;
       });
-      return allSpots;
+      return newState;
 
     //Get A Spot
     case GET_SPOT:
@@ -135,9 +108,6 @@ const spotsReducer = (state = {}, action) => {
       newState = { ...state, [action.spot.id]: action.spot };
       return newState;
 
-    case USER_SPOTS:
-      newState = [...action.spots];
-      return newState;
 
     //Edit A Spot
     // case EDIT_SPOT:

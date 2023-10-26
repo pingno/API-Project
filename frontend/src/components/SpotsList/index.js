@@ -23,7 +23,7 @@ export default function SpotsList() {
   return (
     <div className="spotlist-container">
       {spots.map((spot) => {
-        return <div>
+        return <div key={spot.id}>
           <SpotTile spot={spot} />
         </div>
       })} 

@@ -1,21 +1,37 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getReviewsforSpot } from "../../store/reviews";
 import { useEffect } from "react";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
-import ReviewTile from "../ReviewTile";
 import "./ReviewList.css";
+import { useState } from "react";
+
+import OpenModalButton from "../OpenModalButton";
+import PostReviewModal from "../PostReviewModal";
 
 export default function Reviews({ theSpot }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
 
-  // //All reviews
+  // console.log("USER", user)
+  // console.log("THE SPOT", theSpot)
+
+  const [isOwner, setIsOwner] = useState(false);
+  const [madeReview, setMadeReview] = useState(false);
+
+  //All reviews
   const spotReviewsObj = useSelector((state) => state.reviews);
   const spotReviewsArr = Object.values(spotReviewsObj);
 
   // console.log(" SPOT REVIEWS OBJ", spotReviewsObj);
   // console.log("SPOT REVIEWS ARR ", spotReviewsArr);
 
+  //sort reviews newest first
+  spotReviewsArr.sort((review1, review2) => {
+    const d1 = new Date(review1.createdAt);
+    const d2 = new Date(review2.createdAt);
+    return d1 - d2;
+  });
+
+  //if 1 review or more
   let oneReview;
   let moreReviews;
   if (theSpot.numReviews === 1) oneReview = theSpot.numReviews;
@@ -23,36 +39,43 @@ export default function Reviews({ theSpot }) {
 
   useEffect(() => {
     dispatch(getReviewsforSpot(theSpot.id));
-  }, [dispatch, theSpot]);
+
+    //if owner of spot
+    if (user.id == theSpot.ownerId) setIsOwner(true);
+    //if made review yet
+    spotReviewsArr.forEach((review) => {
+      if (review.userId == user.id) setMadeReview(true);
+    });
+  }, [dispatch]);
 
   if (!spotReviewsArr) return null;
 
   return (
-    <>
+    <div className="reviews-container">
       <div className="review-header">
-        <i class="fa-solid fa-star"></i>
+        <i className="fa-solid fa-star"></i>
         {theSpot.avgRating ? <div>{theSpot.avgRating.toFixed(1)}</div> : "New"}
 
         {oneReview && <div> · {oneReview} Review</div>}
         {moreReviews && <div> · {moreReviews} Reviews</div>}
       </div>
 
-      {/* {spotReviewsArr.forEach(review => review.userId != user.id) && (
-              <NavLink exact to="/spots/new" id="post-your-review">
-              Post Your Review
-            </NavLink>
-            )} */}
+      {isOwner == false && madeReview == false && (
+        <OpenModalButton
+          buttonText={"Post Your Review"}
+          modalComponent={<PostReviewModal theSpot={theSpot}/>}
+        />
+      )}
 
       {spotReviewsArr.length !== 0 ? (
         <div className="reviews-list-container">
           {spotReviewsArr.map((review) => {
-            console.log(" REVIEW ", review);
             let month = review.createdAt.split("-")[1];
             let year = review.createdAt.split("-")[0];
 
             return (
-              <>
-                <div className="review-tile">
+              <div key={review.id}>
+                <div className="review-tile" key={review.id}>
                   <div className="review-first-name">
                     {review.User.firstName}
                   </div>
@@ -61,24 +84,35 @@ export default function Reviews({ theSpot }) {
                   </div>
                   <div className="review-description">{review.review}</div>
                 </div>
-              </>
+
+                {/* {isOwner && 
+                (
+                <>
+                
+                <OpenModalButton 
+                buttonText={"Update"}
+                modalComponent={<UpdateReviewModal />}
+                
+                /> 
+
+                <OpenModalButton 
+                buttonText={"Delete"}
+                modalComponent={<DeleteReviewModal />}
+                />
+                
+                </>
+                )} */}
+
+
+              </div>
             );
           })}
         </div>
-      ) : <p>"Be the first to post a review!</p>}
-    </>
+      ) : (
+        <div>
+          <p>"Be the first to post a review!</p>
+        </div>
+      )}
+    </div>
   );
 }
-
-// ordered reviews MUST BE NEWER FIRST (DOUBLE CHECK)
-// const orderedReviews = spotReviewsArr.sort((review1, review2) => {
-
-//   // new Date().getTime()
-//   if (review1.createdAt < review2.createdAt) {
-//     return -1;
-//   }
-//   if (review2.createdAt > review1.createdAt) {
-//     return 1;
-//   }
-//   return 0;
-// });

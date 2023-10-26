@@ -52,11 +52,12 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
+          
             <li className="loggedin-elements">Hello, {user.firstName}</li>
             <li className="loggedin-elements">{user.email}</li>
 
-            {/* <li>Manage Spots</li> */}
-            {/* <li>Manage Reviews</li> */}
+            <li>Manage Spots</li>
+            <li>Manage Reviews</li>
             <li>
               <button onClick={logout} id="profile-logout">Log Out</button>
             </li>
