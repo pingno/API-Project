@@ -6,7 +6,7 @@ import { useModal } from "../../context/Modal";
 import "./ReviewModal.css";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
-export default function PostReviewModal({ theSpot }) {
+export default function PostReviewModal({ theSpot, setMadeReview }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
@@ -30,7 +30,7 @@ export default function PostReviewModal({ theSpot }) {
 
     // setErrors({});
 
-    return dispatch(createReview(newReview, theSpot.id)).then(closeModal);
+    return dispatch(createReview(newReview, theSpot.id)).then(closeModal());
   };
 
   return (

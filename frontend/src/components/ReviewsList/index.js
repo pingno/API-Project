@@ -13,12 +13,6 @@ export default function Reviews({ theSpot }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
 
-  console.log("USER", user);
-  // console.log("THE SPOT", theSpot)
-
-  const [isOwner, setIsOwner] = useState(false);
-  const [madeReview, setMadeReview] = useState(false);
-
   //All reviews
   const spotReviewsObj = useSelector((state) => state.reviews);
   const spotReviewsArr = Object.values(spotReviewsObj);
@@ -33,24 +27,24 @@ export default function Reviews({ theSpot }) {
     return d2 - d1;
   });
 
-  //if 1 review or more
-  let oneReview;
-  let moreReviews;
-  if (theSpot.numReviews === 1) oneReview = theSpot.numReviews;
-  if (theSpot.numReviews > 1) moreReviews = theSpot.numReviews;
+  let spotRating;
+  if (spotReviewsArr.length) {
+    spotRating =
+      spotReviewsArr.reduce((acc, curr) => acc + curr.stars, 0) /
+      spotReviewsArr.length;
+  }
+
 
   useEffect(() => {
     dispatch(getReviewsforSpot(theSpot.id));
-    //if owner of spot
-    if (user.id === theSpot.ownerId) setIsOwner(true);
-    
-    //if made review yet
-    spotReviewsArr.forEach((review) => {
-      if (review.userId === user.id) setMadeReview(true);
-    });
+  }, [dispatch]);
+
+  let madeReview;
+  if(user){
+    madeReview = spotReviewsArr.find(review => review.userId === user.id)
+  }
 
 
-  }, [dispatch, madeReview, isOwner]);
 
   if (spotReviewsArr.length === 0) return null;
 
@@ -58,19 +52,26 @@ export default function Reviews({ theSpot }) {
     <div className="reviews-container">
       <div className="review-header">
         <i className="fa-solid fa-star"></i>
-        {theSpot.avgRating ? <div>{theSpot.avgRating.toFixed(1)}</div> : "New"}
 
-        {oneReview && <div> · {oneReview} Review</div>}
-        {moreReviews && <div> · {moreReviews} Reviews</div>}
+        {spotReviewsArr.length ? (
+          <>
+            {spotRating.toFixed(1)} · {spotReviewsArr.length}{" "}
+            {spotReviewsArr.length === 1 ? "review" : "reviews"}
+          </>
+        ) : (
+          <div>New</div>
+        )}
       </div>
 
-      {isOwner === false ||
-        (madeReview === false && (
-          <OpenModalButton
-            buttonText={"Post Your Review"}
-            modalComponent={<PostReviewModal theSpot={theSpot} />}
-          />
-        ))}
+
+      {user && user.id !== theSpot.ownerId && !madeReview && (
+        <OpenModalButton
+          buttonText={"Post Your Review"}
+          modalComponent={
+            <PostReviewModal theSpot={theSpot} />
+          }
+        />
+      )}
 
       {spotReviewsArr.length !== 0 ? (
         <div className="reviews-list-container">

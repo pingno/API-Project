@@ -13,25 +13,30 @@ module.exports = {
   async up (queryInterface, Sequelize) {
  
     await SpotImage.bulkCreate([
-      // {
-      //   spotId: 1,
-      //   url: 'https://i.pinimg.com/originals/7b/15/88/7b15886f7f9f6605d93ef0ab24c3eda6.jpg',
-      //   preview: true
-      // },
-      // {
-      //   spotId: 2,
-      //   url: 'https://i.pinimg.com/originals/e1/51/4e/e1514e6eb892d7ac8e97c63fe3014d08.jpg',
-      //   preview: true
-      // },
-      // {
-      //   spotId: 3,
-      //   url: 'https://i.pinimg.com/originals/c6/4a/c2/c64ac2d6d73554772835a1d8e14a1742.jpg',
-      //   preview: true
-      // },
       {
         spotId: 1,
         url: 'https://i.pinimg.com/originals/83/0b/77/830b772f4ae8171f2988d490eca031f5.jpg',
         preview: true
+      },
+      {
+        spotId: 1,
+        url: 'https://i.pinimg.com/564x/31/8a/34/318a34f0b90de3006cd3dbe627718c78.jpg',
+        preview: false
+      },
+      {
+        spotId: 1,
+        url: 'https://i.pinimg.com/564x/84/bc/a1/84bca173a72521445dc008bade976e54.jpg',
+        preview: false
+      },
+      {
+        spotId: 1,
+        url: 'https://i.pinimg.com/736x/cd/75/95/cd75956130717695e6b7a5d1f567ace6.jpg',
+        preview: false
+      },
+      {
+        spotId: 1,
+        url: 'https://i.pinimg.com/564x/4b/f2/8a/4bf28af0dbff5ab7e5e4cdd9f6ce778b.jpg',
+        preview: false
       },
       {
         spotId: 2,
@@ -60,8 +65,8 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      url: { [Op.in]: ['https://i.pinimg.com/originals/83/0b/77/830b772f4ae8171f2988d490eca031f5.jpg','https://i.pinimg.com/736x/d0/d5/88/d0d588eeedcc4d2e02c22b5860751616.jpg','https://i.pinimg.com/originals/a8/27/a6/a827a60c01cd20c41c71d9808def6ca4.jpg','https://i.pinimg.com/originals/f4/fa/32/f4fa32740a00f6e1731026fd798daebf.jpg'] }
-      // url: { [Op.in]: ['https://i.pinimg.com/originals/7b/15/88/7b15886f7f9f6605d93ef0ab24c3eda6.jpg','https://i.pinimg.com/originals/e1/51/4e/e1514e6eb892d7ac8e97c63fe3014d08.jpg','https://i.pinimg.com/originals/c6/4a/c2/c64ac2d6d73554772835a1d8e14a1742.jpg','https://i.pinimg.com/originals/f4/fa/32/f4fa32740a00f6e1731026fd798daebf.jpg'] }
+      preview: { [Op.in]: [true, false] }
+      
     }, {});
 
   }
