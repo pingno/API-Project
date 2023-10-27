@@ -5,7 +5,8 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, NavLink } from "react-router-dom/cjs/react-router-dom.min";
+
 
 function ProfileButton({ user }) {
   const history = useHistory()
@@ -56,8 +57,20 @@ function ProfileButton({ user }) {
             <li className="loggedin-elements">Hello, {user.firstName}</li>
             <li className="loggedin-elements">{user.email}</li>
 
-            <li>Manage Spots</li>
-            <li>Manage Reviews</li>
+          <li>
+            <NavLink exact to="/spots/current" className="manage-stuff-elements">
+              Manage Spots
+            </NavLink>
+          </li>
+        
+        {/* <li>
+        <NavLink exact to="/reviews/current" className="manage-stuff-elements">
+              Manage Reviews
+            </NavLink>
+
+        </li> */}
+           
+    
             <li>
               <button onClick={logout} id="profile-logout">Log Out</button>
             </li>

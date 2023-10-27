@@ -65,7 +65,7 @@ router.post('/:reviewId/images', requireAuth , reqAuthorReview, async (req, res)
 
     //Error response: Couldn't find a Review with the specified id
     const numReviews = await Review.count()
-    if(req.params.reviewId < 1 || req.params.reviewId > numReviews || isNaN(parseInt(req.params.reviewId))){
+    if(req.params.reviewId < 1 || isNaN(parseInt(req.params.reviewId))){
            return res.status(404).json({  message: "Review couldn't be found"   })
     }
 
@@ -107,7 +107,7 @@ router.put('/:reviewId', requireAuth, reqAuthorReview, async (req, res) => {
 
     //Error response: Couldn't find a Review with the specified id
     const numReviews = await Review.count()
-    if(req.params.reviewId < 1 || req.params.reviewId > numReviews || isNaN(parseInt(req.params.reviewId))){
+    if(req.params.reviewId < 1 || isNaN(parseInt(req.params.reviewId))){
            return res.status(404).json({  message: "Review couldn't be found"   })
     }
 
@@ -139,7 +139,7 @@ router.delete('/:reviewId', requireAuth, reqAuthorReview, async (req, res) => {
 
     //Error response: Couldn't find a Review with the specified id
     const numReviews = await Review.count()
-    if(req.params.reviewId < 1 || req.params.reviewId > numReviews || isNaN(parseInt(req.params.reviewId))){
+    if(req.params.reviewId < 1 || isNaN(parseInt(req.params.reviewId))){
            return res.status(404).json({  message: "Review couldn't be found"   })
     }
 

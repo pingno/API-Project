@@ -1,48 +1,36 @@
 import React, { useEffect, useState } from "react";
-import * as sessionActions from "../../store/session";
+// import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { createReview } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
 import "./ReviewModal.css";
+import { useSelector } from "react-redux/es/hooks/useSelector";
 
-export default function PostReviewModal({theSpot}) {
+export default function PostReviewModal({ theSpot }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
-  const [review, setReview] = useState("");
-  const [stars, setStars] = useState(4);
-  const [errors, setErrors] = useState({});
+  const sessionUser = useSelector((state) => state.session.user);
+  console.log("SESSION USER", sessionUser);
 
-  // const [disabled, setDisabled] = useState(false);
+  const [review, setReview] = useState("");
+  const [stars, setStars] = useState(0);
+  // const [errors, setErrors] = useState({});
 
   const disabled = review.length < 10 || stars === 0;
-
-  let newReview = {
-    review,
-    stars,
-  };
-
-  // useEffect(() => {
-  //   if(review.length < 10 || stars === 0) setDisabled(true)
-  // },[review, stars])
 
   // console.log("MY SPOT", theSpot)
 
   const handleSubmit = (e) => {
-  
-    setErrors({});
+    let newReview = {
+      userId: sessionUser.id,
+      review,
+      stars,
+    };
 
-    return dispatch(createReview(newReview, theSpot.id))
-      .then(closeModal)
+    // setErrors({});
 
-      // .catch(async (res) => {
-      //   const data = await res.json();
-      //   if (data && data.errors) {
-      //     setErrors(data.errors);
-      //   }
-      // });
-
-
+    return dispatch(createReview(newReview, theSpot.id)).then(closeModal);
   };
 
   return (

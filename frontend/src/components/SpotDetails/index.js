@@ -4,21 +4,23 @@ import { useParams } from "react-router-dom";
 import { getSpot } from "../../store/spots";
 import "./SingleSpot.css";
 import Reviews from "../ReviewsList";
+import { useState } from "react";
+
 
 export default function SpotDetails() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const theSpot = useSelector((state) => state.spots[spotId]);
-  // const sessionUser = useSelector((state) => state.session.user);
-
-  // console.log("THE SPOT", theSpot);
+  const sessionUser = useSelector((state) => state.session.user);
+ 
+  console.log("THE SPOT", theSpot);
 
   useEffect(() => {
-    dispatch(getSpot(spotId));
+       dispatch(getSpot(spotId));
   }, [dispatch]);
-
-  if (!theSpot?.Owner && !theSpot?.numReviews) return null;
-  // if(!theSpot?.SpotImages) return null
+  
+  if (!theSpot?.Owner && !theSpot?.numReviews) return null
+  if(!theSpot?.SpotImages) return null
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -39,8 +41,8 @@ export default function SpotDetails() {
         </h4>
 
         <div id="images-container">
-
-          <img className="img0" src={theSpot.SpotImages[0].url} />
+          {theSpot && ( <img className="img0" src={theSpot.SpotImages[0].url} />)}
+         
           {theSpot.SpotImages[1] && <img className="img1" src={theSpot.SpotImages[1].url} />}
           {theSpot.SpotImages[2] && <img className="img2" src={theSpot.SpotImages[2].url} />}
           {theSpot.SpotImages[3] && <img className="img3" src={theSpot.SpotImages[3].url} />}

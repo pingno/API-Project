@@ -4,14 +4,16 @@ import { useEffect } from "react";
 import "./ReviewList.css";
 import { useState } from "react";
 
-import OpenModalButton from "../OpenModalButton";
 import PostReviewModal from "../PostReviewModal";
+import OpenModalButton from "../OpenModalButton";
+
+import ReviewTile from "../ReviewTile";
 
 export default function Reviews({ theSpot }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
 
-  // console.log("USER", user)
+  console.log("USER", user);
   // console.log("THE SPOT", theSpot)
 
   const [isOwner, setIsOwner] = useState(false);
@@ -28,7 +30,7 @@ export default function Reviews({ theSpot }) {
   spotReviewsArr.sort((review1, review2) => {
     const d1 = new Date(review1.createdAt);
     const d2 = new Date(review2.createdAt);
-    return d1 - d2;
+    return d2 - d1;
   });
 
   //if 1 review or more
@@ -39,16 +41,18 @@ export default function Reviews({ theSpot }) {
 
   useEffect(() => {
     dispatch(getReviewsforSpot(theSpot.id));
-
     //if owner of spot
-    if (user.id == theSpot.ownerId) setIsOwner(true);
+    if (user.id === theSpot.ownerId) setIsOwner(true);
+    
     //if made review yet
     spotReviewsArr.forEach((review) => {
-      if (review.userId == user.id) setMadeReview(true);
+      if (review.userId === user.id) setMadeReview(true);
     });
-  }, [dispatch]);
 
-  if (!spotReviewsArr) return null;
+
+  }, [dispatch, madeReview, isOwner]);
+
+  if (spotReviewsArr.length === 0) return null;
 
   return (
     <div className="reviews-container">
@@ -60,53 +64,19 @@ export default function Reviews({ theSpot }) {
         {moreReviews && <div> · {moreReviews} Reviews</div>}
       </div>
 
-      {isOwner == false && madeReview == false && (
-        <OpenModalButton
-          buttonText={"Post Your Review"}
-          modalComponent={<PostReviewModal theSpot={theSpot}/>}
-        />
-      )}
+      {isOwner === false ||
+        (madeReview === false && (
+          <OpenModalButton
+            buttonText={"Post Your Review"}
+            modalComponent={<PostReviewModal theSpot={theSpot} />}
+          />
+        ))}
 
       {spotReviewsArr.length !== 0 ? (
         <div className="reviews-list-container">
-          {spotReviewsArr.map((review) => {
-            let month = review.createdAt.split("-")[1];
-            let year = review.createdAt.split("-")[0];
-
-            return (
-              <div key={review.id}>
-                <div className="review-tile" key={review.id}>
-                  <div className="review-first-name">
-                    {review.User.firstName}
-                  </div>
-                  <div className="review-date">
-                    {month} {year}
-                  </div>
-                  <div className="review-description">{review.review}</div>
-                </div>
-
-                {/* {isOwner && 
-                (
-                <>
-                
-                <OpenModalButton 
-                buttonText={"Update"}
-                modalComponent={<UpdateReviewModal />}
-                
-                /> 
-
-                <OpenModalButton 
-                buttonText={"Delete"}
-                modalComponent={<DeleteReviewModal />}
-                />
-                
-                </>
-                )} */}
-
-
-              </div>
-            );
-          })}
+          {spotReviewsArr.map((review) => (
+            <ReviewTile review={review} />
+          ))}
         </div>
       ) : (
         <div>

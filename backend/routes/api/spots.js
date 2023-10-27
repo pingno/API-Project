@@ -184,7 +184,7 @@ res.json({
 router.get('/:spotId', async (req, res, next) => {
 
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
            return res.status(404).json({
                 message: "Spot couldn't be found"
             })
@@ -268,7 +268,7 @@ res.status(201).json(spot)
 router.post('/:spotId/images', requireAuth, reqAuthorization, async(req, res) => {
 
 const numSpots = await Spot.count()
-if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
       return res.status(404).json({  message: "Spot couldn't be found"  })
 }
 
@@ -293,7 +293,7 @@ if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.p
 router.put('/:spotId', requireAuth, reqAuthorization, async(req,res) => {
 
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
           return res.status(404).json({
                 message: "Spot couldn't be found"
             })
@@ -352,25 +352,64 @@ router.delete('/:spotId', requireAuth, reqAuthorization, async (req, res) => {
 router.get('/:spotId/reviews', async (req, res) => {
 
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
            return res.status(404).json({  message: "Spot couldn't be found"   })
     }
 
-    const reviews = await Review.findAll({
-        where: { spotId: req.params.spotId },
-        include: [
-            {
-                model: User,
-                attributes: ['id', 'firstName', 'lastName']
-            },
-            {
-                model: ReviewImage,
-                attributes: ['id', 'url']
+    // const reviews = await Review.findAll({
+    //     where: { spotId: req.params.spotId },
+    //     include: [
+    //         {
+    //             model: User,
+    //             attributes: ['id', 'firstName', 'lastName']
+    //         },
+    //         {
+    //             model: ReviewImage,
+    //             attributes: ['id', 'url']
+    //         }
+    //     ]
+    // })
+
+    // res.json({ Reviews: reviews })
+
+    const spot = await Spot.findByPk(req.params.spotId);
+    const reviews = await spot.getReviews({
+        attributes: {
+            include: ['createdAt', 'updatedAt']
+        }
+    });
+
+    const reviewsJSON = reviews.map(review => review.toJSON());
+
+    for (let i = 0; i < reviewsJSON.length; i++) {
+        const review = reviewsJSON[i];
+
+        const user = await User.findByPk(review.userId, {
+            attributes: {
+                exclude: ['username']
             }
-        ]
+        })
+
+        review.User = user;
+
+        const reviewImages = await ReviewImage.findAll({
+            where: {
+                reviewId: review.id
+            },
+            attributes: {
+                exclude: ['reviewId']
+            }
+        });
+
+        review.ReviewImages = reviewImages
+    }
+
+    res.json({
+        Reviews: reviewsJSON
     })
 
-    res.json({ Reviews: reviews })
+
+
 
 })
 
@@ -381,7 +420,7 @@ router.post('/:spotId/reviews', requireAuth,  async (req, res) => {
 
     //Error response: Couldn't find a Spot with the specified id
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
            return res.status(404).json({  message: "Spot couldn't be found"   })
     }
 
@@ -402,7 +441,6 @@ router.post('/:spotId/reviews', requireAuth,  async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId)
 
     const allReviews = await Review.findAll({
-        raw:true,
         where:{
             userId: user.id,
             spotId: req.params.spotId
@@ -505,7 +543,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
    
     //Error response: Couldn't find a Spot with the specified id
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
            return res.status(404).json({  message: "Spot couldn't be found"   })
     }
 

@@ -17,7 +17,6 @@ export default function SpotTile({ spot }) {
         <div className="spot-container"  key={spot.id} onClick={handleClick} title={spot.name}>
           <img
             className="spot-image"
-            // src={`${spot.previewImage}`}
             src={spot.previewImage}
             alt={spot.name}
           />
