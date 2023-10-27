@@ -6,6 +6,7 @@ import OpenModalButton from "../OpenModalButton";
 import DeleteSpotModal from "../DeleteSpotModal";
 import { useEffect } from "react";
 import { getMySpots } from "../../store/spots";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function ManageSpotsList() {
   const dispatch = useDispatch();
@@ -39,10 +40,18 @@ export default function ManageSpotsList() {
               <div key={spot.id}>
                 <SpotTile spot={spot} />
 
-                <div>Update</div>
+                <NavLink exact to={`/spots/${spot.id}/edit`} id="update-delete-button"  >
+                  Update
+                </NavLink>
+
                 <OpenModalButton
                   buttonText={"Delete"}
-                  modalComponent={<DeleteSpotModal spotId={spot.id} />}
+                  modalComponent={
+                    <DeleteSpotModal
+                      spotId={spot.id}
+                      id="update-delete-button"
+                    />
+                  }
                 />
               </div>
             );

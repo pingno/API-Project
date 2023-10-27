@@ -87,13 +87,16 @@ export const createASpot = (spot, spotImages) => async (dispatch) => {
   });
   const newSpot = await res.json();
 
-  await csrfFetch(`/api/spots/${newSpot.id}/images`, {
-    method: "POST",
-    body: JSON.stringify({
-      url: spotImages[0],
-      preview: true,
-    }),
-  });
+  if(spotImages.length > 0){
+    await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+      method: "POST",
+      body: JSON.stringify({
+        url: spotImages[0],
+        preview: true,
+      }),
+    });
+  }
+  
 
 
   if (spotImages.length > 1) {
@@ -113,12 +116,6 @@ export const createASpot = (spot, spotImages) => async (dispatch) => {
   await dispatch(createSpot(newSpot));
   return newSpot.id;
 };
-
-
-
-
-
-
 
 
 let newState;

@@ -1,53 +1,56 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { createASpot } from "../../store/spots";
-import "./CreateForm.css";
+import { useHistory, useParams } from "react-router-dom";
+import { createASpot, getSpot } from "../../store/spots";
+import "./UpdateForm.css";
 
-export default function CreateSpot() {
+export default function UpdateSpot() {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
 
-  const [country, setCountry] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
+  const { spotId } = useParams();
+  const spot = useSelector((state) => state.spots[spotId]);
 
-  const [previewImageURL, setPreviewImageURL] = useState("");
-  const [imageURL1, setImageURL1] = useState("");
-  const [imageURL2, setImageURL2] = useState("");
-  const [imageURL3, setImageURL3] = useState("");
-  const [imageURL4, setImageURL4] = useState("");
+  console.log("SPOT TO EDIT", spot);
+
+  const [country, setCountry] = useState(spot ? spot.country : "");
+  const [address, setAddress] = useState(spot ? spot.address : "");
+  const [city, setCity] = useState(spot ? spot.city : "");
+  const [state, setState] = useState(spot ? spot.state : "");
+  const [latitude, setLatitude] = useState(spot ? spot.lat : "");
+  const [longitude, setLongitude] = useState(spot ? spot.lng : "");
+  const [description, setDescription] = useState(spot ? spot.description : "");
+  const [name, setName] = useState(spot ? spot.name : "");
+  const [price, setPrice] = useState(spot ? spot.price : "");
+
   const [errors, setErrors] = useState({});
-
   const [submitted, yesSubmitted] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let errorList= {}
+    let errorList = {};
 
-    if(!address) errorList.address = "Street address is required"
-    if(!city) errorList.city = "City is required"
-    if(!state) errorList.state = "State is required"
-    if(!country) errorList.country = "Country is required"
-    if(isNaN(latitude) ||latitude < -90 || latitude > 90) errorList.lat = "Latitude is not valid"
-    if(isNaN(longitude) || longitude < -180 || longitude > 180) errorList.lng = "Longitude is not valid"
-    if(!name || name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
-    if(!description) errorList.description = "Description is required"
-    if(description.length < 30) errorList.description = "Description must be atleast 30 characters"
-    if(!price || price < 1) errorList.price = "Price per day is required"
-    if(!previewImageURL) errorList.price = "Preview image required"
+    if (!address) errorList.address = "Street address is required";
+    if (!city) errorList.city = "City is required";
+    if (!state) errorList.state = "State is required";
+    if (!country) errorList.country = "Country is required";
+    if (isNaN(latitude) || latitude < -90 || latitude > 90)
+      errorList.lat = "Latitude is not valid";
+    if (isNaN(longitude) || longitude < -180 || longitude > 180)
+      errorList.lng = "Longitude is not valid";
+    if (!name || name.length > 50 || name.length < 0)
+      errorList.name = "Name must be less than 50 characters";
+    if (!description) errorList.description = "Description is required";
+    if (description.length < 30)
+      errorList.description = "Description must be atleast 30 characters";
+    if (!price || price < 1) errorList.price = "Price per day is required";
 
-    if(Object.values(errorList).length > 0){
-      setErrors(errorList)
-      return
+    if (Object.values(errorList).length > 0) {
+      setErrors(errorList);
+      return;
     }
 
     const newSpot = {
@@ -64,22 +67,13 @@ export default function CreateSpot() {
     if (latitude) newSpot.lat = latitude;
     if (longitude) newSpot.lng = longitude;
 
-    let spotImages = [previewImageURL];
+    //spotId = await dispatch(updateASpot(newSpot));
 
-    if (imageURL1) spotImages.push(imageURL1);
-    if (imageURL2) spotImages.push(imageURL2);
-    if (imageURL3) spotImages.push(imageURL3);
-    if (imageURL4) spotImages.push(imageURL4);
-
-
-    const response = await dispatch(createASpot(newSpot, spotImages))
-    
-    if(!response.errors){
-      history.push(`/spots/${response}`);
+    if (!spotId.errors) {
+      history.push(`/spots/${spotId}`);
       yesSubmitted(true);
       reset();
     }
-
   };
 
   const reset = () => {
@@ -92,23 +86,35 @@ export default function CreateSpot() {
     setDescription("");
     setName("");
     setPrice("");
-    setPreviewImageURL("");
-    setImageURL1("");
-    setImageURL2("");
-    setImageURL3("");
-    setImageURL4("");
   };
 
   useEffect(() => {
     yesSubmitted(false);
-   
     setErrors({});
-  }, [submitted]);
+    dispatch(getSpot(spotId));
+  }, [dispatch, submitted]);
+
+  useEffect(() => {
+    if(spot){
+        setCountry(spot.country)
+        setAddress(spot.address)
+        setCity(spot.city)
+        setState(spot.state)
+        setLatitude(spot.lat)
+        setLongitude(spot.lng)
+        setDescription(spot.description)
+        setName(spot.name)
+        setPrice(spot.price)
+    }
+  }, [spot])
+
+
+  if (spot === undefined) return null;
 
   return (
     <div className="form-container">
-      <form onSubmit={handleSubmit} className="create-form-field">
-        <h1>Create a new Spot</h1>
+      <form onSubmit={handleSubmit} className="update-form-field">
+        <h1>Update your Spot</h1>
 
         <p className="section-title">Where's your place located?</p>
         <p className="section-description">
@@ -141,8 +147,8 @@ export default function CreateSpot() {
           )}
         </div>
         <div>
-          <div style={{display: "flex"}}>
-            <div style={{width: "100%"}}>
+          <div style={{ display: "flex" }}>
+            <div style={{ width: "100%" }}>
               <label className="label">City</label>
               <input
                 type="text"
@@ -151,9 +157,8 @@ export default function CreateSpot() {
                 onChange={(e) => setCity(e.target.value)}
                 required
               />
-               
-            </div>
-            {" "} ,
+            </div>{" "}
+            ,
             <div>
               <label className="label">State</label>
               <input
@@ -174,38 +179,36 @@ export default function CreateSpot() {
           )}
         </div>
 
-        <div style={{display: "flex"}}>
-          <div style={{width: "100%"}}>
-          <label className="label">Latitude</label>
-          <input
-            type="text"
-            placeholder="Latitude"
-            value={latitude}
-            onChange={(e) => setLatitude(e.target.value)}
-          />
-          </div>
-          {" "} ,
+        <div style={{ display: "flex" }}>
+          <div style={{ width: "100%" }}>
+            <label className="label">Latitude</label>
+            <input
+              type="text"
+              placeholder="Latitude"
+              value={latitude}
+              onChange={(e) => setLatitude(e.target.value)}
+            />
+          </div>{" "}
+          ,
           <div>
-          <label className="label">Longitude</label>
-          <input
-            type="text"
-            placeholder="Longitude"
-            value={longitude}
-            onChange={(e) => setLongitude(e.target.value)}
-          />
+            <label className="label">Longitude</label>
+            <input
+              type="text"
+              placeholder="Longitude"
+              value={longitude}
+              onChange={(e) => setLongitude(e.target.value)}
+            />
           </div>
-         
         </div>
 
-        <div style={{display: "flex", gap: "5px"}}>
-            {errors.lat && (
+        <div style={{ display: "flex", gap: "5px" }}>
+          {errors.lat && (
             <p style={{ fontSize: "10px", color: "red" }}>{errors.lat}</p>
           )}
           {errors.lng && (
             <p style={{ fontSize: "10px", color: "red" }}>{errors.lng}</p>
           )}
-            </div>
-
+        </div>
 
         <div className="section-gap" />
         <p className="section-title">Describe your place to guests</p>
@@ -266,52 +269,9 @@ export default function CreateSpot() {
         </div>
 
         <div className="section-gap" />
-        <p className="section-title">Liven up your spot with photos</p>
-        <p className="section-description">
-          Submit a link to at least one photo to publish your spot
-        </p>
 
-        <input
-          type="url"
-          placeholder="Preview Image URL"
-          value={previewImageURL}
-          onChange={(e) => setPreviewImageURL(e.target.value)}
-          className="image-input"
-        />
-        {errors.url && (
-          <p style={{ fontSize: "10px", color: "red" }}>*{errors.url}</p>
-        )}
 
-        <input
-          type="url"
-          placeholder="Image URL"
-          value={imageURL1}
-          onChange={(e) => setImageURL1(e.target.value)}
-          className="image-input"
-        />
-        <input
-          type="url"
-          placeholder="Image URL"
-          value={imageURL2}
-          onChange={(e) => setImageURL2(e.target.value)}
-          className="image-input"
-        />
-        <input
-          type="url"
-          placeholder="Image URL"
-          value={imageURL3}
-          onChange={(e) => setImageURL3(e.target.value)}
-          className="image-input"
-        />
-        <input
-          type="url"
-          placeholder="Image URL"
-          value={imageURL4}
-          onChange={(e) => setImageURL4(e.target.value)}
-          className="image-input"
-        />
-
-        <div className="create-form-button">
+        <div className="update-form-button">
           <button type="submit">Create Spot</button>
         </div>
       </form>

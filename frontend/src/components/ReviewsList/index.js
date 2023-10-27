@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { getReviewsforSpot } from "../../store/reviews";
 import { useEffect } from "react";
 import "./ReviewList.css";
-import { useState } from "react";
 
 import PostReviewModal from "../PostReviewModal";
 import OpenModalButton from "../OpenModalButton";
@@ -34,17 +33,14 @@ export default function Reviews({ theSpot }) {
       spotReviewsArr.length;
   }
 
-
   useEffect(() => {
     dispatch(getReviewsforSpot(theSpot.id));
   }, [dispatch]);
 
   let madeReview;
-  if(user){
-    madeReview = spotReviewsArr.find(review => review.userId === user.id)
+  if (user) {
+    madeReview = spotReviewsArr.find((review) => review.userId === user.id);
   }
-
-
 
   if (spotReviewsArr.length === 0) return null;
 
@@ -63,13 +59,10 @@ export default function Reviews({ theSpot }) {
         )}
       </div>
 
-
       {user && user.id !== theSpot.ownerId && !madeReview && (
         <OpenModalButton
           buttonText={"Post Your Review"}
-          modalComponent={
-            <PostReviewModal theSpot={theSpot} />
-          }
+          modalComponent={<PostReviewModal theSpot={theSpot} />}
         />
       )}
 

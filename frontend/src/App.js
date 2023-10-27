@@ -10,6 +10,7 @@ import SpotDetails from "./components/SpotDetails";
 import CreateSpot from "./components/CreateSpot";
 import ManageSpotsList from "./components/ManageSpots";
 import ManageReviewsList from "./components/ManageReviews";
+import UpdateSpot from "./components/UpdateSpot";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ function App() {
 
 
           <Route exact path="/spots/:spotId/edit">
-
+            <UpdateSpot />
           </Route>
 
          
