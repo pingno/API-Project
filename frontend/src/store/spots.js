@@ -95,21 +95,31 @@ export const createASpot = (spot, spotImages) => async (dispatch) => {
     }),
   });
 
+
   if (spotImages.length > 1) {
-    spotImages.splice(1).map(async (url) => {
-      await csrfFetch(`/api/spots/${newSpot.id}/images`, {
-        method: "POST",
-        body: JSON.stringify({
-          url,
-          preview: true,
-        }),
-      });
-    });
+    await Promise.all(
+      spotImages.splice(1).map(async (url) => {
+        await csrfFetch(`/api/spots/${newSpot.id}/images`, {
+          method: "POST",
+          body: JSON.stringify({
+            url,
+            preview: false,
+          }),
+        });
+      })
+    )
   }
 
-  dispatch(createSpot(newSpot));
+  await dispatch(createSpot(newSpot));
   return newSpot.id;
 };
+
+
+
+
+
+
+
 
 let newState;
 

@@ -28,8 +28,27 @@ export default function CreateSpot() {
 
   const [submitted, yesSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let errorList= {}
+
+    if(!address) errorList.address = "Street address is required"
+    if(!city) errorList.city = "City is required"
+    if(!state) errorList.state = "State is required"
+    if(!country) errorList.country = "Country is required"
+    if(isNaN(latitude) ||latitude < -90 || latitude > 90) errorList.lat = "Latitude is not valid"
+    if(isNaN(longitude) || longitude < -180 || longitude > 180) errorList.lng = "Longitude is not valid"
+    if(!name || name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
+    if(!description) errorList.description = "Description is required"
+    if(description.length < 30) errorList.description = "Description must be atleast 30 characters"
+    if(!price || price < 1) errorList.price = "Price per day is required"
+    if(!previewImageURL) errorList.price = "Preview image required"
+
+    if(Object.values(errorList).length > 0){
+      setErrors(errorList)
+      return
+    }
 
     const newSpot = {
       ownerId: user.id,
@@ -45,7 +64,7 @@ export default function CreateSpot() {
     if (latitude) newSpot.lat = latitude;
     if (longitude) newSpot.lng = longitude;
 
-   let spotImages = [previewImageURL];
+    let spotImages = [previewImageURL];
 
     if (imageURL1) spotImages.push(imageURL1);
     if (imageURL2) spotImages.push(imageURL2);
@@ -53,12 +72,12 @@ export default function CreateSpot() {
     if (imageURL4) spotImages.push(imageURL4);
 
 
-     dispatch(createASpot(newSpot, spotImages))
-      .then((newSpotId) => {
-        history.push(`/spots/${newSpotId}`);
-      });
-
-    yesSubmitted(true)
+    const response = await dispatch(createASpot(newSpot, spotImages))
+    
+    if(!response.errors){
+      history.push(`/spots/${response}`);
+      yesSubmitted(true);
+    }
 
   };
 
@@ -121,31 +140,41 @@ export default function CreateSpot() {
           )}
         </div>
         <div>
-          <label className="label">City</label>
-          <input
-            type="text"
-            placeholder="City"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            required
-          />
+          <div style={{display: "flex"}}>
+            <div style={{width: "100%"}}>
+              <label className="label">City</label>
+              <input
+                type="text"
+                placeholder="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+              />
+               
+            </div>
+            {" "} ,
+            <div>
+              <label className="label">State</label>
+              <input
+                type="text"
+                placeholder="State"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
           {errors.city && (
             <p style={{ fontSize: "10px", color: "red" }}>*{errors.city}</p>
           )}
-          <label className="label">State</label>
-          <input
-            type="text"
-            placeholder="State"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-            required
-          />
           {errors.state && (
             <p style={{ fontSize: "10px", color: "red" }}>*{errors.state}</p>
           )}
         </div>
 
-        <div>
+        <div style={{display: "flex"}}>
+          <div style={{width: "100%"}}>
           <label className="label">Latitude</label>
           <input
             type="text"
@@ -153,9 +182,9 @@ export default function CreateSpot() {
             value={latitude}
             onChange={(e) => setLatitude(e.target.value)}
           />
-          {errors.lat && (
-            <p style={{ fontSize: "10px", color: "red" }}>{errors.lat}</p>
-          )}
+          </div>
+          {" "} ,
+          <div>
           <label className="label">Longitude</label>
           <input
             type="text"
@@ -163,10 +192,20 @@ export default function CreateSpot() {
             value={longitude}
             onChange={(e) => setLongitude(e.target.value)}
           />
+          </div>
+         
+        </div>
+
+        <div style={{display: "flex", gap: "5px"}}>
+            {errors.lat && (
+            <p style={{ fontSize: "10px", color: "red" }}>{errors.lat}</p>
+          )}
           {errors.lng && (
             <p style={{ fontSize: "10px", color: "red" }}>{errors.lng}</p>
           )}
-        </div>
+            </div>
+
+
         <div className="section-gap" />
         <p className="section-title">Describe your place to guests</p>
         <p className="section-description">
@@ -214,13 +253,17 @@ export default function CreateSpot() {
         {errors.price && (
           <p style={{ fontSize: "10px", color: "red" }}>*{errors.price}</p>
         )}
-        <input
-          type="number"
-          placeholder="Price per night (USD)"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-        />
+        <div style={{ display: "flex", gap: "5px" }}>
+          <div> $ </div>
+          <input
+            type="number"
+            placeholder="Price per night (USD)"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
+        </div>
+
         <div className="section-gap" />
         <p className="section-title">Liven up your spot with photos</p>
         <p className="section-description">
