@@ -22,6 +22,9 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+
+
+      
       {isLoaded && (
         <Switch>
 
@@ -29,13 +32,16 @@ function App() {
             <SpotsList />
           </Route>
 
+
           <Route exact path="/spots/new">
             <CreateSpot />
           </Route>
           
+          
           <Route exact path="/spots/current">
             <ManageSpotsList />
           </Route>
+     
 
           <Route exact path="/spots/:spotId">
             <SpotDetails />

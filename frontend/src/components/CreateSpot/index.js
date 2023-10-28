@@ -31,23 +31,27 @@ export default function CreateSpot() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let errorList= {}
+    let errorList = {};
 
-    if(!address) errorList.address = "Street address is required"
-    if(!city) errorList.city = "City is required"
-    if(!state) errorList.state = "State is required"
-    if(!country) errorList.country = "Country is required"
-    if(isNaN(latitude) ||latitude < -90 || latitude > 90) errorList.lat = "Latitude is not valid"
-    if(isNaN(longitude) || longitude < -180 || longitude > 180) errorList.lng = "Longitude is not valid"
-    if(!name || name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
-    if(!description) errorList.description = "Description is required"
-    if(description.length < 30) errorList.description = "Description must be atleast 30 characters"
-    if(!price || price < 1) errorList.price = "Price per day is required"
-    if(!previewImageURL) errorList.price = "Preview image required"
+    if (!address) errorList.address = "Street address is required";
+    if (!city) errorList.city = "City is required";
+    if (!state) errorList.state = "State is required";
+    if (!country) errorList.country = "Country is required";
+    if (isNaN(latitude) || latitude < -90 || latitude > 90)
+      errorList.lat = "Latitude is not valid";
+    if (isNaN(longitude) || longitude < -180 || longitude > 180)
+      errorList.lng = "Longitude is not valid";
+    if (!name || name.length > 50 || name.length < 0)
+      errorList.name = "Name must be less than 50 characters";
+    if (!description) errorList.description = "Description is required";
+    if (description.length < 30)
+      errorList.description = "Description must be atleast 30 characters";
+    if (!price || price < 1) errorList.price = "Price per day is required";
+    if (!previewImageURL) errorList.price = "Preview image required";
 
-    if(Object.values(errorList).length > 0){
-      setErrors(errorList)
-      return
+    if (Object.values(errorList).length > 0) {
+      setErrors(errorList);
+      return;
     }
 
     const newSpot = {
@@ -71,15 +75,13 @@ export default function CreateSpot() {
     if (imageURL3) spotImages.push(imageURL3);
     if (imageURL4) spotImages.push(imageURL4);
 
+    const response = await dispatch(createASpot(newSpot, spotImages));
 
-    const response = await dispatch(createASpot(newSpot, spotImages))
-    
-    if(!response.errors){
+    if (!response.errors) {
       history.push(`/spots/${response}`);
       yesSubmitted(true);
       reset();
     }
-
   };
 
   const reset = () => {
@@ -101,7 +103,7 @@ export default function CreateSpot() {
 
   useEffect(() => {
     yesSubmitted(false);
-   
+
     setErrors({});
   }, [submitted]);
 
@@ -122,6 +124,7 @@ export default function CreateSpot() {
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             required
+            className="input1"
           />
           {errors.country && (
             <p style={{ fontSize: "10px", color: "red" }}>*{errors.country}</p>
@@ -135,14 +138,18 @@ export default function CreateSpot() {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
+            className="input1"
           />
           {errors.address && (
             <p style={{ fontSize: "10px", color: "red" }}>*{errors.address}</p>
           )}
         </div>
-        <div>
-          <div style={{display: "flex"}}>
-            <div style={{width: "100%"}}>
+
+
+        <div className="city-state">
+          <div style={{ display: "flex" }}>
+
+            <div style={{ width: "100%" }}>
               <label className="label">City</label>
               <input
                 type="text"
@@ -150,10 +157,12 @@ export default function CreateSpot() {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 required
+                className="input1"
               />
-               
             </div>
-            {" "} ,
+
+            <div className='comma'> , </div>
+
             <div>
               <label className="label">State</label>
               <input
@@ -162,8 +171,10 @@ export default function CreateSpot() {
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 required
+                className="input1"
               />
             </div>
+
           </div>
 
           {errors.city && (
@@ -174,38 +185,42 @@ export default function CreateSpot() {
           )}
         </div>
 
-        <div style={{display: "flex"}}>
-          <div style={{width: "100%"}}>
-          <label className="label">Latitude</label>
-          <input
-            type="text"
-            placeholder="Latitude"
-            value={latitude}
-            onChange={(e) => setLatitude(e.target.value)}
-          />
+        <div style={{ display: "flex" }} className="lat-lng">
+
+          <div style={{ width: "100%" }}>
+            <label className="label">Latitude</label>
+            <input
+              type="text"
+              placeholder="Latitude"
+              value={latitude}
+              onChange={(e) => setLatitude(e.target.value)}
+              className="input2"
+            />
           </div>
-          {" "} ,
+
+          <div className='comma'> , </div>
+
           <div>
-          <label className="label">Longitude</label>
-          <input
-            type="text"
-            placeholder="Longitude"
-            value={longitude}
-            onChange={(e) => setLongitude(e.target.value)}
-          />
+            <label className="label">Longitude</label>
+            <input
+              type="text"
+              placeholder="Longitude"
+              value={longitude}
+              onChange={(e) => setLongitude(e.target.value)}
+              className="input2"
+            />
           </div>
-         
+          
         </div>
 
-        <div style={{display: "flex", gap: "5px"}}>
-            {errors.lat && (
+        <div style={{ display: "flex", gap: "5px" }}>
+          {errors.lat && (
             <p style={{ fontSize: "10px", color: "red" }}>{errors.lat}</p>
           )}
           {errors.lng && (
             <p style={{ fontSize: "10px", color: "red" }}>{errors.lng}</p>
           )}
-            </div>
-
+        </div>
 
         <div className="section-gap" />
         <p className="section-title">Describe your place to guests</p>
@@ -220,6 +235,7 @@ export default function CreateSpot() {
           onChange={(e) => setDescription(e.target.value)}
           id="input-textarea"
           required
+          className="input1"
         />
         {errors.description && (
           <p style={{ fontSize: "10px", color: "red" }}>
@@ -239,6 +255,7 @@ export default function CreateSpot() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          className="input1"
         />
         {errors.name && (
           <p style={{ fontSize: "10px", color: "red" }}>*{errors.name}</p>
@@ -262,6 +279,7 @@ export default function CreateSpot() {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
+            className="input1"
           />
         </div>
 
@@ -276,7 +294,7 @@ export default function CreateSpot() {
           placeholder="Preview Image URL"
           value={previewImageURL}
           onChange={(e) => setPreviewImageURL(e.target.value)}
-          className="image-input"
+          className="image-input input1"
         />
         {errors.url && (
           <p style={{ fontSize: "10px", color: "red" }}>*{errors.url}</p>
@@ -287,28 +305,28 @@ export default function CreateSpot() {
           placeholder="Image URL"
           value={imageURL1}
           onChange={(e) => setImageURL1(e.target.value)}
-          className="image-input"
+          className="image-input input1 "
         />
         <input
           type="url"
           placeholder="Image URL"
           value={imageURL2}
           onChange={(e) => setImageURL2(e.target.value)}
-          className="image-input"
+          className="image-input input1"
         />
         <input
           type="url"
           placeholder="Image URL"
           value={imageURL3}
           onChange={(e) => setImageURL3(e.target.value)}
-          className="image-input"
+          className="image-input input1"
         />
         <input
           type="url"
           placeholder="Image URL"
           value={imageURL4}
           onChange={(e) => setImageURL4(e.target.value)}
-          className="image-input"
+          className="image-input input1"
         />
 
         <div className="create-form-button">

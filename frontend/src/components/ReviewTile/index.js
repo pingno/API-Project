@@ -9,7 +9,7 @@ export default function ReviewTile({review}){
     let year = review.createdAt.split("-")[0];
 
     return(
-        <div key={review.id}>
+
         <div className="review-tile" key={review.id}>
           <div className="review-first-name">
             {review.User?.firstName}
@@ -18,27 +18,14 @@ export default function ReviewTile({review}){
             {month} {year}
           </div>
           <div className="review-description">{review.review}</div>
-        </div>
 
-        {review.userId === user.id &&
-        (
-        <>
-        
-        {/* <OpenModalButton 
-        buttonText={"Update"}
-        modalComponent={<UpdateReviewModal />}
-        
-        />  */}
-
-        <OpenModalButton 
+          {review.userId === user?.id &&
+        ( <OpenModalButton 
         buttonText={"Delete"}
         modalComponent={<DeleteReviewModal reviewId={review.id}/>}
         />
-        
-        </>
-        )}
+         )}
+        </div>
 
-
-      </div>
     );
 }

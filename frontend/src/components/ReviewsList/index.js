@@ -69,7 +69,7 @@ export default function Reviews({ theSpot }) {
       {spotReviewsArr.length !== 0 ? (
         <div className="reviews-list-container">
           {spotReviewsArr.map((review) => (
-            <ReviewTile review={review} />
+            <ReviewTile review={review} key={review.id}/>
           ))}
         </div>
       ) : (

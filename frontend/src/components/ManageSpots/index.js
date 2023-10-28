@@ -21,7 +21,7 @@ export default function ManageSpotsList() {
 
   const newSpots = mySpots.filter((spots) => spots.ownerId === sessionUser.id);
 
-  console.log("SPOTS FILTERED", newSpots);
+  // console.log("SPOTS FILTERED", newSpots);
 
   return (
     <div className="manage-spots-container">
@@ -40,27 +40,21 @@ export default function ManageSpotsList() {
               <div key={spot.id}>
                 <SpotTile spot={spot} />
 
-                <NavLink exact to={`/spots/${spot.id}/edit`} id="update-delete-button"  >
+                <NavLink exact to={`/spots/${spot.id}/edit`} id="update-update-button" >
                   Update
                 </NavLink>
 
                 <OpenModalButton
                   buttonText={"Delete"}
-                  modalComponent={
-                    <DeleteSpotModal
-                      spotId={spot.id}
-                      id="update-delete-button"
-                    />
-                  }
+                  modalComponent={ <DeleteSpotModal spotId={spot.id}/> }
+                  className="update-delete-button"
+
                 />
               </div>
             );
           })}
           <div className="bottom-buttons-row">
-            {/* <OpenModalButton
-          buttonText={"Update"}
-          modalComponent={<PostReviewModal theSpot={spot}/>}
-        /> */}
+            
           </div>
         </div>
       )}

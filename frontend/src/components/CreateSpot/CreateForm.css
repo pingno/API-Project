@@ -14,10 +14,10 @@
     font-size: 12px;
 }
 
-input {
+.input1 {
     display: flex;
     justify-content: center;
-    width: 98%;
+    width: 100%;
     border: 1.5px solid grey;
     border-radius: 3px;
     background-color: rgb(237, 248, 255)
@@ -34,7 +34,7 @@ input {
     font-size: 11px;
 }
 
-.update-form-button {
+.create-form-button {
     margin-top: 15px;
     display: flex;
     justify-content: center;
@@ -43,6 +43,7 @@ input {
 .section-gap {
     margin-top: 15px;
     border: 1px solid black;
+    width: 100%;
 }
 
 .label {
@@ -52,4 +53,25 @@ input {
 
 .image-input{
     margin-bottom: 10px;
+}
+
+
+.input2{
+    border: 1.5px solid grey;
+    border-radius: 3px;
+    background-color: rgb(237, 248, 255);
+    width: 186px;
+}
+
+
+.lat-lng{
+    width: 100%
+}
+
+
+.comma {
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 7px;
+
 }

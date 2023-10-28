@@ -2,10 +2,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 
-    padding-left: 15px;
-    /* flex-shrink: 1; */
+    /* margin: 10px; */
 
-   
+}
 
-    
+.each-spot-tile{
+    display: flex;
+    justify-content: center;
 }

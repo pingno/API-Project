@@ -23,6 +23,7 @@
     font-size: 18px;
     font-weight: bold;
     padding-bottom: 10px;
+    color: lightblue
 }
 
 .delete-review-text{
@@ -37,7 +38,7 @@
     height: 20%;
     background-color: lightcoral;
     color: white;
-    box-shadow: 3px 2px 2px black;
+    box-shadow: 2px 1px 1px black;
 }
 
 .button-no{
@@ -46,5 +47,5 @@
     height: 20%;
     background-color: darkgrey;
     color: white;
-    box-shadow: 3px 2px 2px black;
+    box-shadow: 2px 1px 1px black;
 }

@@ -13,7 +13,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 5px;
+    margin: 4px;
+    
     
 }
 
@@ -21,5 +22,13 @@
     width: 100%;
     color: white;
     background-color: lightcoral;
-    box-shadow: 2px 1px 1px black;
+    box-shadow: 2px 1px 1px rgb(97, 97, 97);
+    border-radius: 10px;
+    margin-top: 8px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.label-signup{
+    font-size: 11.5px;
 }

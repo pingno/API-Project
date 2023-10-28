@@ -15,7 +15,6 @@ export default function DeleteSpotModal({ spotId }) {
     e.preventDefault();
     dispatch(deleteTheSpot(spotId))
     .then(closeModal())
-    history.push("/spots/current");
   };
 
   return (

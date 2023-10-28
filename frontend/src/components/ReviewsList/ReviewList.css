@@ -4,11 +4,14 @@
 
 .review-header {
     display: flex;
-    /* margin: 10px 15px; */
+   font-family: arial;
+   gap: 5px;
 }
 
 .reviews-list-container {
     margin: 5px 10px;
+    font-family: arial;
+
 }
 
 .review-tile{
@@ -19,9 +22,16 @@
     font-size: 15px;
     font-weight: bold;
     padding: 5px 0px;
+    font-style: italic;
+    
 }
 
 .review-date{
-    color: 1px solid lightgrey
+    font-size: 12px;
+    color: lightblue;
+    padding-bottom: 6px;
 }
 
+.review-description{
+    font-size: 14px;
+}

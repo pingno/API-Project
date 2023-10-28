@@ -48,7 +48,7 @@ function SignupFormModal() {
     <div className="form-field">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label>
+        <label className="label-signup">
           Email
           <input
             type="text"
@@ -59,7 +59,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.email && <p style={{ fontSize: "10px", color: "red" }}>{errors.email}</p>}
-        <label>
+        <label className="label-signup">
           Username
           <input
             type="text"
@@ -70,7 +70,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.username && <p style={{ fontSize: "10px", color: "red" }}>{errors.username}</p>}
-        <label>
+        <label className="label-signup">
           First Name
           <input
             type="text"
@@ -81,7 +81,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.firstName && <p style={{ fontSize: "10px", color: "red" }}>{errors.firstName}</p>}
-        <label>
+        <label className="label-signup">
           Last Name
           <input
             type="text"
@@ -92,7 +92,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.lastName && <p style={{ fontSize: "10px", color: "red" }}>{errors.lastName}</p>}
-        <label>
+        <label className="label-signup">
           Password
           <input
             type="password"
@@ -103,7 +103,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.password && <p style={{ fontSize: "10px", color: "red" }}>{errors.password}</p>}
-        <label>
+        <label className="label-signup">
           Confirm Password
           <input
             type="password"

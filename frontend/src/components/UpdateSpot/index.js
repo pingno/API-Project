@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { createASpot, getSpot } from "../../store/spots";
+import { updateSpot, getSpot } from "../../store/spots";
 import "./UpdateForm.css";
 
 export default function UpdateSpot() {
@@ -67,10 +67,12 @@ export default function UpdateSpot() {
     if (latitude) newSpot.lat = latitude;
     if (longitude) newSpot.lng = longitude;
 
-    //spotId = await dispatch(updateASpot(newSpot));
+    let data = await dispatch(updateSpot(newSpot, spotId));
 
-    if (!spotId.errors) {
-      history.push(`/spots/${spotId}`);
+    console.log("DATA", data)
+
+    if (!data.errors) {
+      history.push(`/spots/${data.id}`);
       yesSubmitted(true);
       reset();
     }
@@ -128,6 +130,7 @@ export default function UpdateSpot() {
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             required
+            className="input1"
           />
           {errors.country && (
             <p style={{ fontSize: "10px", color: "red" }}>*{errors.country}</p>
@@ -141,14 +144,18 @@ export default function UpdateSpot() {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
+            className="input1"
           />
           {errors.address && (
             <p style={{ fontSize: "10px", color: "red" }}>*{errors.address}</p>
           )}
         </div>
-        <div>
+
+
+        <div className="city-state">
           <div style={{ display: "flex" }}>
-            <div style={{ width: "100%" }}>
+
+            <div style={{ width: "100%" }} >
               <label className="label">City</label>
               <input
                 type="text"
@@ -156,9 +163,12 @@ export default function UpdateSpot() {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 required
+                className="input1"
               />
-            </div>{" "}
-            ,
+            </div>
+
+            <div className='comma'> , </div>
+
             <div>
               <label className="label">State</label>
               <input
@@ -167,8 +177,10 @@ export default function UpdateSpot() {
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 required
+                className="input1"
               />
             </div>
+
           </div>
 
           {errors.city && (
@@ -179,7 +191,10 @@ export default function UpdateSpot() {
           )}
         </div>
 
-        <div style={{ display: "flex" }}>
+
+
+        <div style={{ display: "flex" }} className="lat-lng">
+
           <div style={{ width: "100%" }}>
             <label className="label">Latitude</label>
             <input
@@ -187,9 +202,12 @@ export default function UpdateSpot() {
               placeholder="Latitude"
               value={latitude}
               onChange={(e) => setLatitude(e.target.value)}
+              className="input2"
             />
-          </div>{" "}
-          ,
+          </div>
+
+          <div className='comma'> , </div>
+
           <div>
             <label className="label">Longitude</label>
             <input
@@ -197,8 +215,10 @@ export default function UpdateSpot() {
               placeholder="Longitude"
               value={longitude}
               onChange={(e) => setLongitude(e.target.value)}
+              className="input2"
             />
           </div>
+
         </div>
 
         <div style={{ display: "flex", gap: "5px" }}>
@@ -223,6 +243,7 @@ export default function UpdateSpot() {
           onChange={(e) => setDescription(e.target.value)}
           id="input-textarea"
           required
+          className="input1"
         />
         {errors.description && (
           <p style={{ fontSize: "10px", color: "red" }}>
@@ -242,6 +263,7 @@ export default function UpdateSpot() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          className="input1"
         />
         {errors.name && (
           <p style={{ fontSize: "10px", color: "red" }}>*{errors.name}</p>
@@ -265,6 +287,7 @@ export default function UpdateSpot() {
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
+            className="input1"
           />
         </div>
 

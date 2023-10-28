@@ -24,7 +24,7 @@ export default function SpotDetails() {
   console.log("THE SPOT", theSpot);
 
   useEffect(() => {
-    dispatch(getSpot(spotId))
+    dispatch(getSpot(spotId));
   }, [dispatch]);
 
   if (!theSpot?.Owner && !theSpot?.numReviews) return null;
@@ -34,7 +34,6 @@ export default function SpotDetails() {
     e.preventDefault();
     alert("Feature coming soon!");
   };
-
 
   return (
     <>
@@ -63,27 +62,31 @@ export default function SpotDetails() {
 
         <div id="description-container">
           <div id="description-left-column">
-            <p>
+            <p className="hosted-by">
               Hosted by {theSpot.Owner.firstName} {theSpot.Owner.lastName}
             </p>
-            <div>{theSpot.description}</div>
+            <div className="description">{theSpot.description}</div>
           </div>
 
           <div id="description-right-column">
             <div id="right-column-row-one">
-              <div>${theSpot.price} night</div>
 
-                <i className="fa-solid fa-star"></i>
-                {reviews.length ? (
-                  <p>
-                    {spotRating.toFixed(1)} · {reviews.length}{" "}
-                    {reviews.length === 1 ? "review" : "reviews"}
-                  </p>
-                ) : (
-                  <div>New</div>
-                )}
+              <div style={{display: "flex", gap: "2px"}}>
+                <div className="price"> ${theSpot.price} </div>
+                <div>night</div>
+              </div>
 
-              
+              {reviews.length ? (
+                <p className="starfield">
+                  <i className="fa-solid fa-star"></i>
+                  {spotRating.toFixed(1)} · {reviews.length}{" "}
+                  {reviews.length === 1 ? "review" : "reviews"}
+                </p>
+              ) : (
+                <div>
+                  <i className="fa-solid fa-star"></i>New
+                </div>
+              )}
             </div>
             <div id="right-column-row-two">
               <button className="reserve-button" onClick={handleClick}>
