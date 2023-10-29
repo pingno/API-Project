@@ -69,7 +69,7 @@ export default function UpdateSpot() {
 
     let data = await dispatch(updateSpot(newSpot, spotId));
 
-    console.log("DATA", data)
+    // console.log("DATA", data)
 
     if (!data.errors) {
       history.push(`/spots/${data.id}`);

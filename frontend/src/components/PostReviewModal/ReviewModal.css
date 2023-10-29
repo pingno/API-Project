@@ -46,18 +46,19 @@
     margin: 2px;
 }
 
-.review-star{
 
-}
-
-.text-star{
-
-}
-
-.review-star {
-
+.star-hidden {
+ color: lightcyan
 }
   
-.review-star:hover {
-   color: white; /* Hovered star color */
+.star-show{
+ color: yellow
 }
+
+
+.text-star {
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+

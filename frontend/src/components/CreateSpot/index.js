@@ -47,7 +47,7 @@ export default function CreateSpot() {
     if (description.length < 30)
       errorList.description = "Description must be atleast 30 characters";
     if (!price || price < 1) errorList.price = "Price per day is required";
-    if (!previewImageURL) errorList.price = "Preview image required";
+    if (!previewImageURL) errorList.url = "Preview image required";
 
     if (Object.values(errorList).length > 0) {
       setErrors(errorList);
@@ -298,6 +298,7 @@ export default function CreateSpot() {
         />
         {errors.url && (
           <p style={{ fontSize: "10px", color: "red" }}>*{errors.url}</p>
+     
         )}
 
         <input
