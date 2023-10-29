@@ -184,7 +184,7 @@ res.json({
 router.get('/:spotId', async (req, res, next) => {
 
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
            return res.status(404).json({
                 message: "Spot couldn't be found"
             })
@@ -206,9 +206,7 @@ router.get('/:spotId', async (req, res, next) => {
 
     const spotJSON = spot.toJSON()
 
-    const user = await User.findOne({
-        raw: true,
-        where: { id: req.params.spotId },
+    const user = await spot.getUser({
         attributes: ['id','firstName','lastName']
     })
 
@@ -238,8 +236,8 @@ router.post('/', requireAuth, async (req, res) => {
     if(!city) errorList.city = "City is required"
     if(!state) errorList.state = "State is required"
     if(!country) errorList.country = "Country is required"
-    if(!lat || isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
-    if(!lng || isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
+    if(lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
+    if(lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
     if(!name || name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
     if(!description) errorList.description = "Description is required"
     if(!price || price < 1) errorList.price = "Price per day is required"
@@ -270,15 +268,13 @@ res.status(201).json(spot)
 router.post('/:spotId/images', requireAuth, reqAuthorization, async(req, res) => {
 
 const numSpots = await Spot.count()
-if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
       return res.status(404).json({  message: "Spot couldn't be found"  })
 }
 
     const { user } = req
     const { url, preview } = req.body
-    const spot = await Spot.findOne({
-        where: { ownerId: user.id }
-    })
+    const spot = await Spot.findByPk(req.params.spotId)
 
 
     const newSpotImage = await SpotImage.create({ url, preview })
@@ -297,7 +293,7 @@ if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.p
 router.put('/:spotId', requireAuth, reqAuthorization, async(req,res) => {
 
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
           return res.status(404).json({
                 message: "Spot couldn't be found"
             })
@@ -312,8 +308,8 @@ router.put('/:spotId', requireAuth, reqAuthorization, async(req,res) => {
     if(!city) errorList.city = "City is required"
     if(!state) errorList.state = "State is required"
     if(!country) errorList.country = "Country is required"
-    if(!lat || isNaN(lat) || lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
-    if(!lng || isNaN(lng) || lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
+    if(lat < -90 || lat > 90) errorList.lat = "Latitude is not valid"
+    if(lng < -180 || lng > 180) errorList.lng = "Longitude is not valid"
     if(!name || name.length > 50 || name.length < 0) errorList.name = "Name must be less than 50 characters"
     if(!description) errorList.description = "Description is required"
     if(!price || price < 1) errorList.price = "Price per day is required"
@@ -356,25 +352,64 @@ router.delete('/:spotId', requireAuth, reqAuthorization, async (req, res) => {
 router.get('/:spotId/reviews', async (req, res) => {
 
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
            return res.status(404).json({  message: "Spot couldn't be found"   })
     }
 
-    const reviews = await Review.findAll({
-        where: { spotId: req.params.spotId },
-        include: [
-            {
-                model: User,
-                attributes: ['id', 'firstName', 'lastName']
-            },
-            {
-                model: ReviewImage,
-                attributes: ['id', 'url']
+    // const reviews = await Review.findAll({
+    //     where: { spotId: req.params.spotId },
+    //     include: [
+    //         {
+    //             model: User,
+    //             attributes: ['id', 'firstName', 'lastName']
+    //         },
+    //         {
+    //             model: ReviewImage,
+    //             attributes: ['id', 'url']
+    //         }
+    //     ]
+    // })
+
+    // res.json({ Reviews: reviews })
+
+    const spot = await Spot.findByPk(req.params.spotId);
+    const reviews = await spot.getReviews({
+        attributes: {
+            include: ['createdAt', 'updatedAt']
+        }
+    });
+
+    const reviewsJSON = reviews.map(review => review.toJSON());
+
+    for (let i = 0; i < reviewsJSON.length; i++) {
+        const review = reviewsJSON[i];
+
+        const user = await User.findByPk(review.userId, {
+            attributes: {
+                exclude: ['username']
             }
-        ]
+        })
+
+        review.User = user;
+
+        const reviewImages = await ReviewImage.findAll({
+            where: {
+                reviewId: review.id
+            },
+            attributes: {
+                exclude: ['reviewId']
+            }
+        });
+
+        review.ReviewImages = reviewImages
+    }
+
+    res.json({
+        Reviews: reviewsJSON
     })
 
-    res.json({ Reviews: reviews })
+
+
 
 })
 
@@ -385,7 +420,7 @@ router.post('/:spotId/reviews', requireAuth,  async (req, res) => {
 
     //Error response: Couldn't find a Spot with the specified id
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
            return res.status(404).json({  message: "Spot couldn't be found"   })
     }
 
@@ -406,7 +441,6 @@ router.post('/:spotId/reviews', requireAuth,  async (req, res) => {
     const spot = await Spot.findByPk(req.params.spotId)
 
     const allReviews = await Review.findAll({
-        raw:true,
         where:{
             userId: user.id,
             spotId: req.params.spotId
@@ -509,7 +543,7 @@ router.post('/:spotId/bookings', requireAuth, async (req, res) => {
    
     //Error response: Couldn't find a Spot with the specified id
     const numSpots = await Spot.count()
-    if(req.params.spotId < 1 || req.params.spotId > numSpots || isNaN(parseInt(req.params.spotId))){
+    if(req.params.spotId < 1 || isNaN(parseInt(req.params.spotId))){
            return res.status(404).json({  message: "Spot couldn't be found"   })
     }
 

@@ -106,7 +106,6 @@ const reqAuthorReview = async function (req, res, next){
   }
 
   if(user.id === review.userId) return next()
-
   const err = new Error('Forbidden')
   err.errors = { message: 'Forbidden'}
   err.status = 403;

@@ -7,6 +7,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+
+
   }
   
   #modal-background {
@@ -16,9 +19,17 @@
     left: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
+
+
+ 
+
   }
   
   #modal-content {
     position: absolute;
     background-color: white;
+    border-radius: 20px;
+    box-shadow: 2px 3px 2px rgb(0, 0, 0);
+
+
   }

@@ -1,0 +1,51 @@
+.delete-review-container{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+
+    height: 175px;
+    width: 250px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 8px;
+    margin: 10px;
+
+   
+
+}
+
+.delete-review-title{
+
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    color: lightblue
+}
+
+.delete-review-text{
+    align-items: center;
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+
+.button-yes{
+
+    width: 100%;
+    height: 20%;
+    background-color: lightcoral;
+    color: white;
+    box-shadow: 2px 1px 1px black;
+}
+
+.button-no{
+
+    width: 100%;
+    height: 20%;
+    background-color: darkgrey;
+    color: white;
+    box-shadow: 2px 1px 1px black;
+}

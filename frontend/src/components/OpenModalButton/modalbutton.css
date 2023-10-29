@@ -1,0 +1,12 @@
+.modal-button-style{
+    text-decoration: none;
+    border: 1px solid black;
+    font-family: arial;
+    font-size: 11px;
+    color: white;
+    background-color: lightblue;
+    border-radius: 8px;
+    margin: 4px;
+    padding: 4px;
+
+}

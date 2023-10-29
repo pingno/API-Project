@@ -12,6 +12,8 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  const disabled = credential.length < 4 || password.length < 6
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
@@ -22,14 +24,28 @@ function LoginFormModal() {
         if (data && data.errors) {
           setErrors(data.errors);
         }
+
+      // console.log("DATA ", data)
+      // console.log("ERRORS ", data.message)
+      //check your 401 error handler
       });
   };
+
+  const handleDemo = (e) => {
+      e.preventDefault()
+      setCredential("demo@user.io")
+      setPassword("password")
+      return dispatch(sessionActions.login({
+        credential: "demo@user.io",
+        password: "password"
+      })).then(closeModal)
+  }
 
   return (
     <div className="form-field">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit} >
-        <label >
+       
           Username or Email
           <input
             type="text"
@@ -38,8 +54,7 @@ function LoginFormModal() {
             required
             className="form-slot"
           />
-        </label>
-        <label>
+      
           Password
           <input
             type="password"
@@ -48,12 +63,14 @@ function LoginFormModal() {
             required
             className="form-slot"
           />
-        </label>
+ 
         {errors.credential && (
-          <p>{errors.credential}</p>
+          <p style={{ fontSize: "10px", color: "red" }}>{errors.credential}</p>
         )}
         <div className="form-slot"> 
-        <button type="submit">Log In</button>
+        
+        <button type="submit" className="login-button" disabled={disabled}>Log In</button>
+        <button className="demo-user" onClick={handleDemo}>Demo User</button>
         </div>
       </form>
     </div>

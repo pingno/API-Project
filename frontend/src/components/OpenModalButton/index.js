@@ -1,6 +1,8 @@
 // frontend/src/components/OpenModalButton/index.js
 import React from "react";
 import { useModal } from "../../context/Modal";
+import "./modalbutton.css"
+
 
 function OpenModalButton({
   modalComponent, // component to render inside the modal
@@ -16,7 +18,7 @@ function OpenModalButton({
     setModalContent(modalComponent);
   };
 
-  return <button onClick={onClick}>{buttonText}</button>;
+  return <button onClick={onClick} className="modal-button-style">{buttonText}</button>;
 }
 
 export default OpenModalButton;

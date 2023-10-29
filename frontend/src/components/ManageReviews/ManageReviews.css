@@ -1,0 +1,26 @@
+.manage-reviews-container{
+    margin: 10px 10px;
+}
+
+.manage-reviews-title{
+    font-family: arial;
+    font-weight: bold;
+
+}
+.reviewslist-container {
+    margin: 5px 15px;
+    font-family: arial;
+    
+}
+
+
+.review-first-name{
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 0px;
+}
+
+.review-date{
+    color: 1px solid lightgrey
+}
+

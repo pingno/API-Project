@@ -15,6 +15,8 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  // const signUpButton = disabled ? "login-button-on" : "login-button-off"
+  const disabled = username.length < 4 || password.length < 6 || !email || !username || !firstName || !lastName || !password || !confirmPassword
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -46,7 +48,7 @@ function SignupFormModal() {
     <div className="form-field">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label>
+        <label className="label-signup">
           Email
           <input
             type="text"
@@ -56,8 +58,8 @@ function SignupFormModal() {
             className="form-slot"
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
+        {errors.email && <p style={{ fontSize: "10px", color: "red" }}>{errors.email}</p>}
+        <label className="label-signup">
           Username
           <input
             type="text"
@@ -67,8 +69,8 @@ function SignupFormModal() {
             className="form-slot"
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
+        {errors.username && <p style={{ fontSize: "10px", color: "red" }}>{errors.username}</p>}
+        <label className="label-signup">
           First Name
           <input
             type="text"
@@ -78,8 +80,8 @@ function SignupFormModal() {
             className="form-slot"
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
+        {errors.firstName && <p style={{ fontSize: "10px", color: "red" }}>{errors.firstName}</p>}
+        <label className="label-signup">
           Last Name
           <input
             type="text"
@@ -89,8 +91,8 @@ function SignupFormModal() {
             className="form-slot"
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
+        {errors.lastName && <p style={{ fontSize: "10px", color: "red" }}>{errors.lastName}</p>}
+        <label className="label-signup">
           Password
           <input
             type="password"
@@ -100,8 +102,8 @@ function SignupFormModal() {
             className="form-slot"
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
+        {errors.password && <p style={{ fontSize: "10px", color: "red" }}>{errors.password}</p>}
+        <label className="label-signup">
           Confirm Password
           <input
             type="password"
@@ -112,10 +114,10 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && (
-          <p>{errors.confirmPassword}</p>
+          <p style={{ fontSize: "10px", color: "red" }}>{errors.confirmPassword}</p>
         )}
         <div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" className="signup-button" disabled={disabled}>Sign Up</button>
         </div>
       </form>
     </div>
