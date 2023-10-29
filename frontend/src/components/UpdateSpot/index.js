@@ -12,7 +12,6 @@ export default function UpdateSpot() {
   const { spotId } = useParams();
   const spot = useSelector((state) => state.spots[spotId]);
 
-  console.log("SPOT TO EDIT", spot);
 
   const [country, setCountry] = useState(spot ? spot.country : "");
   const [address, setAddress] = useState(spot ? spot.address : "");
@@ -69,7 +68,7 @@ export default function UpdateSpot() {
 
     let data = await dispatch(updateSpot(newSpot, spotId));
 
-    // console.log("DATA", data)
+    console.log("DATA", data)
 
     if (!data.errors) {
       history.push(`/spots/${data.id}`);
@@ -129,7 +128,6 @@ export default function UpdateSpot() {
             placeholder="Country"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-            required
             className="input1"
           />
           {errors.country && (
@@ -143,7 +141,6 @@ export default function UpdateSpot() {
             placeholder="Street Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            required
             className="input1"
           />
           {errors.address && (
@@ -162,7 +159,6 @@ export default function UpdateSpot() {
                 placeholder="City"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                required
                 className="input1"
               />
             </div>
@@ -176,7 +172,6 @@ export default function UpdateSpot() {
                 placeholder="State"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                required
                 className="input1"
               />
             </div>
@@ -184,10 +179,10 @@ export default function UpdateSpot() {
           </div>
 
           {errors.city && (
-            <p style={{ fontSize: "10px", color: "red" }}>*{errors.city}</p>
+            <span style={{ fontSize: "10px", color: "red", paddingRight: "8px" }}>*{errors.city}</span>
           )}
           {errors.state && (
-            <p style={{ fontSize: "10px", color: "red" }}>*{errors.state}</p>
+            <span style={{ fontSize: "10px", color: "red" }}>*{errors.state}</span>
           )}
         </div>
 
@@ -242,7 +237,6 @@ export default function UpdateSpot() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           id="input-textarea"
-          required
           className="input1"
         />
         {errors.description && (
@@ -262,7 +256,6 @@ export default function UpdateSpot() {
           placeholder="Name of your spot"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required
           className="input1"
         />
         {errors.name && (
@@ -286,7 +279,6 @@ export default function UpdateSpot() {
             placeholder="Price per night (USD)"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            required
             className="input1"
           />
         </div>

@@ -13,9 +13,9 @@ export default function ManageSpotsList() {
   const sessionUser = useSelector((state) => state.session.user);
   const mySpots = Object.values(useSelector((state) => state.spots));
 
-  // useEffect(() => {
-  //   dispatch(getMySpots())
-  // }, [dispatch])
+  useEffect(() => {
+    dispatch(getMySpots())
+  }, [dispatch])
 
   if (!mySpots.length) return null;
 

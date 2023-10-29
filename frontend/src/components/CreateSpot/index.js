@@ -322,7 +322,7 @@ export default function CreateSpot() {
           onChange={(e) => setImageURL4(e.target.value)}
           className="image-input input1"
         />
-
+<div className="section-gap" />
         <div className="create-form-button">
           <button type="submit">Create Spot</button>
         </div>

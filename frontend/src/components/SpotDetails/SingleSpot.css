@@ -19,7 +19,7 @@
 }
 
 .first-row-details{
-
+    
 }
 
 .second-row-details{
@@ -93,7 +93,7 @@
 
 
 #description-container{
-    display: inline-flex;
+    display: flex;
     justify-content: center;
     margin: 5px 0px;
     
@@ -107,14 +107,19 @@
 
     border-radius: 12px;
     border: 2px solid black;
-    /* width: 30%;
-    height: 100%; */
-    width: 240px;
-    height: 75px;
 
-    margin-top: 33px;
+    width: 240px;
+
+    height: 75px;
+    /* height: 100px; */
+
+    /* margin-top: 33px;
     padding-top: 8px;
-    padding-bottom: 18px;
+    padding-bottom: 18px; */
+
+    margin: 30px;
+    padding: 10px;
+
 }
 
 .price{
@@ -132,13 +137,16 @@
     justify-content: space-around;
     align-items: center;
     font-size: 14px;
+
+    /* margin-top: 2px;  */
+    /* test */
 }
 
 #right-column-row-two{
     display: flex;
     justify-content: center;
-
     height: 30px;
+
 }
 
 .reserve-button {

@@ -15,7 +15,7 @@ export default function PostReviewModal({ theSpot, setMadeReview }) {
   const { closeModal } = useModal();
 
   const sessionUser = useSelector((state) => state.session.user);
-  console.log("SESSION USER", sessionUser);
+  // console.log("SESSION USER", sessionUser);
 
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);

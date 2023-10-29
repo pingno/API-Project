@@ -18,8 +18,8 @@ export default function Reviews({ theSpot }) {
   const spotReviewsObj = useSelector((state) => state.reviews);
   const spotReviewsArr = Object.values(spotReviewsObj);
 
-  console.log(" SPOT REVIEWS OBJ", spotReviewsObj);
-  console.log("SPOT REVIEWS ARR ", spotReviewsArr);
+  // console.log(" SPOT REVIEWS OBJ", spotReviewsObj);
+  // console.log("SPOT REVIEWS ARR ", spotReviewsArr);
 
   //sort reviews newest first
   spotReviewsArr.sort((review1, review2) => {
