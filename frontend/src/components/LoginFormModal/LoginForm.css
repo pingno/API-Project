@@ -29,6 +29,8 @@
 }
 
 
+
+
 .login-button{
     width: 100%;
     color: white;
@@ -36,6 +38,9 @@
     box-shadow: 2px 1.5px 1.5px rgb(145, 145, 145);
     border-radius: 12px;
     margin-top: 8px;
-    cursor: pointer;
+
 }
 
+.login-button:disabled{
+    background-color: grey;
+}

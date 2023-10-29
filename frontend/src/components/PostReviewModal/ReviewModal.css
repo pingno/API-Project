@@ -48,11 +48,11 @@
 
 
 .star-hidden {
- color: lightcyan
+ color: rgb(166, 255, 255)
 }
   
 .star-show{
- color: yellow
+ color: rgb(255, 208, 0)
 }
 
 

@@ -48,29 +48,8 @@ function SignupFormModal() {
     <div className="form-field">
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <label className="label-signup">
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="form-slot"
-          />
-        </label>
-        {errors.email && <p style={{ fontSize: "10px", color: "red" }}>{errors.email}</p>}
-        <label className="label-signup">
-          Username
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className="form-slot"
-          />
-        </label>
-        {errors.username && <p style={{ fontSize: "10px", color: "red" }}>{errors.username}</p>}
-        <label className="label-signup">
+
+      <label className="label-signup">
           First Name
           <input
             type="text"
@@ -93,6 +72,29 @@ function SignupFormModal() {
         </label>
         {errors.lastName && <p style={{ fontSize: "10px", color: "red" }}>{errors.lastName}</p>}
         <label className="label-signup">
+          Email
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="form-slot"
+          />
+        </label>
+        {errors.email && <p style={{ fontSize: "10px", color: "red" }}>{errors.email}</p>}
+        <label className="label-signup">
+          Username
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="form-slot"
+          />
+        </label>
+        {errors.username && <p style={{ fontSize: "10px", color: "red" }}>{errors.username}</p>}
+        
+        <label className="label-signup">
           Password
           <input
             type="password"
@@ -114,7 +116,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && (
-          <p style={{ fontSize: "10px", color: "red" }}>{errors.confirmPassword}</p>
+          <p style={{ fontSize: "10px", color: "red", width: "175px" }}>{errors.confirmPassword}</p>
         )}
         <div>
         <button type="submit" className="signup-button" disabled={disabled}>Sign Up</button>

@@ -46,6 +46,7 @@ export default function PostReviewModal({ theSpot, setMadeReview }) {
       )}
       <textarea
         value={review}
+        placeholder="Leave your review here"
         onChange={(e) => setReview(e.target.value)}
         required
         className="review-text"

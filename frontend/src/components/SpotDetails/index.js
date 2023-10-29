@@ -36,7 +36,9 @@ export default function SpotDetails() {
   };
 
   return (
-    <>
+    <> <div className="spot-page">
+
+    
       <div id="spot-detail-container">
         <h2 id="first-row-details">{theSpot.name}</h2>
         <h4 id="second-row-details">
@@ -96,8 +98,9 @@ export default function SpotDetails() {
           </div>
         </div>
       </div>
-
+      </div>
       <Reviews theSpot={theSpot} />
+      
     </>
   );
 }
