@@ -15,7 +15,7 @@ export default function PostReviewModal({ theSpot, setMadeReview }) {
   const { closeModal } = useModal();
 
   const sessionUser = useSelector((state) => state.session.user);
-  console.log("SESSION USER", sessionUser);
+  // console.log("SESSION USER", sessionUser);
 
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
@@ -46,6 +46,7 @@ export default function PostReviewModal({ theSpot, setMadeReview }) {
       )}
       <textarea
         value={review}
+        placeholder="Leave your review here"
         onChange={(e) => setReview(e.target.value)}
         required
         className="review-text"

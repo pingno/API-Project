@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getReviewsforSpot } from "../../store/reviews";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./ReviewList.css";
 
 import PostReviewModal from "../PostReviewModal";
@@ -11,6 +11,8 @@ import ReviewTile from "../ReviewTile";
 export default function Reviews({ theSpot }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
+
+  const [reviewsLoaded, setReviewsLoaded] = useState(false)
 
   //All reviews
   const spotReviewsObj = useSelector((state) => state.reviews);
@@ -34,7 +36,7 @@ export default function Reviews({ theSpot }) {
   }
 
   useEffect(() => {
-    dispatch(getReviewsforSpot(theSpot.id));
+    dispatch(getReviewsforSpot(theSpot.id)).then(() => setReviewsLoaded(true))
   }, [dispatch]);
 
   let madeReview;
@@ -42,7 +44,7 @@ export default function Reviews({ theSpot }) {
     madeReview = spotReviewsArr.find((review) => review.userId === user.id);
   }
 
-  if (spotReviewsArr.length === 0) return null;
+  if(reviewsLoaded === false) return null
 
   return (
     <div className="reviews-container">

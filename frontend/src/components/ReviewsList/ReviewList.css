@@ -1,5 +1,5 @@
 .reviews-container{
-    margin: 10px 25px;
+    margin: 10px 80px;
 }
 
 .review-header {
@@ -11,6 +11,7 @@
 .reviews-list-container {
     margin: 5px 10px;
     font-family: arial;
+    margin-bottom: 25px;
 
 }
 
@@ -34,4 +35,5 @@
 
 .review-description{
     font-size: 14px;
+    margin-bottom: 7px;
 }

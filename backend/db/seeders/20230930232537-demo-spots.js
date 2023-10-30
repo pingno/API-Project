@@ -55,11 +55,59 @@ module.exports = {
         city: 'Kiyoshi',
         state: 'Kyoto',
         country: 'JP',
-        lat: 46.2453545,
-        lng: 88.2154545,
+        lat: 46.2425345,
+        lng: 88.2154564,
         name: 'Kame House',
         description: 'Designed for a couple and their young children, 07BEACH took the opportunity to use an open plan for simplicity and for the sake of keeping an eye on the kids. The House in Kyoto is timber-clad and includes a tatami mat room on the first floor, paying respect to a major characteristic in Japanese architecture. To add a sentimental touch, 07BEACH placed a young tree within the double-height living room to grow alongside the children throughout the years.” ',
-        price: 200
+        price: 150
+      },
+      {
+        ownerId: 1,
+        address: '987 Momoiro',
+        city: 'Orihime',
+        state: 'Skypeia',
+        country: 'JP',
+        lat: 21.2250545,
+        lng: 52.2532125,
+        name: 'Kaze House',
+        description: 'Japanese architect Erika Nakagawa defines her open plan weekend house in the lazy seaside town of Atami, an hour and a half south of Tokyo, as a renovation, rather than a completely new structure. The 458 sq m site, perched in the middle of a steep hairpin turn up the romantic sounding Peach (Momo) Mountain (Yama), already came with a surrounding wall made from rough fieldstones at the bottom and concrete cinder blocks at the top.” ',
+        price: 120
+      },
+      {
+        ownerId: 2,
+        address: '529 Logue Town',
+        city: 'Shimotsuki',
+        state: 'Kyojin',
+        country: 'JP',
+        lat: 41.2453545,
+        lng: 80.2154545,
+        name: 'Mizu House',
+        description: 'The project was created as compact studios for the area, which has high demand for pied-a-terre homes due to its nearby hospital and nursing school. The minimalist, flowing design is centred on a main, shared courtyard, which serves as a place for meeting and socialising for the residents, as well as the wider community.',
+        price: 250
+      },
+      {
+        ownerId: 3,
+        address: '529 Karakuri',
+        city: 'Totto Land',
+        state: 'Nujin',
+        country: 'JP',
+        lat: 33.2353245,
+        lng: 77.2152785,
+        name: 'Akuma House',
+        description: 'The new Japanese architecture addition comprises a scattering of minimalist design, appearing to float in the forest, separate yet connected, with hovering walkways, corridors and hidden gardens just visible through the trees. An unfolding dialogue between nature and architecture takes centre stage. ',
+        price: 225
+      },
+      {
+        ownerId: 4,
+        address: '544 Shirohige',
+        city: 'Rocks',
+        state: 'Xebec',
+        country: 'JP',
+        lat: 46.2453545,
+        lng: 88.2154545,
+        name: 'Shiso House',
+        description: 'the Japanese architecture studio of Takeshi Hirobe takes its cues from its site; quite literally so, as  the unusually shaped building was formed by following the buildable outline of its plot, resulting in an expressive, angular, striking roof that defines its identity. This parcel of land, while enviably perched on a hillside offering long views of Japan\'s Minamiboso City and the sea in the distance ',
+        price: 100
       }
       
     ], { validate: true });
@@ -72,7 +120,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      address: { [Op.in]: ['723 Wano', '212 Sabaody', '239 Raftel', '529 Laugh Tale'] }
+      ownerId: { [Op.in]: [1,2,3,4] }
     }, {});
 
   }

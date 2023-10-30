@@ -4,6 +4,7 @@
 
     margin: 15px;
 
+    width: 100%;
 
 
 }
@@ -11,4 +12,10 @@
 .each-spot-tile{
     display: flex;
     justify-content: center;
+}
+
+.spotlist-block{
+    display: flex;
+    justify-content: center;
+    margin: 0px 25px;
 }

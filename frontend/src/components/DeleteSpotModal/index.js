@@ -9,7 +9,7 @@ export default function DeleteSpotModal({ spotId }) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  console.log("SPOT ID", spotId)
+  // console.log("SPOT ID", spotId)
 
   const handleYes = (e) => {
     e.preventDefault();

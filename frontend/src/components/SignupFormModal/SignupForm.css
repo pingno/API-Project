@@ -4,9 +4,6 @@
     align-items: center;
     width: 250px;
 
-    /* border: 1px solid red; */
-    /* font-family: Arial, Helvetica, sans-serif; */
-
 }
 
 .form-slot {
@@ -26,7 +23,12 @@
     border-radius: 10px;
     margin-top: 8px;
     font-size: 12px;
-    cursor: pointer;
+ 
+}
+
+
+.signup-button:disabled{
+    background-color: grey;
 }
 
 .label-signup{

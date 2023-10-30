@@ -13,7 +13,7 @@ export default function ManageReviewsList() {
     (review) => review.userId === sessionUser.id
   );
 
-  console.log("ALL MY REVIEWS", allReviews);
+  // console.log("ALL MY REVIEWS", allReviews);
 
   return (
     <div className="manage-reviews-container">

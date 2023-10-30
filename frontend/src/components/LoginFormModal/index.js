@@ -24,10 +24,6 @@ function LoginFormModal() {
         if (data && data.errors) {
           setErrors(data.errors);
         }
-
-      // console.log("DATA ", data)
-      // console.log("ERRORS ", data.message)
-      //check your 401 error handler
       });
   };
 
@@ -70,7 +66,7 @@ function LoginFormModal() {
         <div className="form-slot"> 
         
         <button type="submit" className="login-button" disabled={disabled}>Log In</button>
-        <button className="demo-user" onClick={handleDemo}>Demo User</button>
+        <button className="demo-user" onClick={handleDemo}>Log in as Demo User</button>
         </div>
       </form>
     </div>

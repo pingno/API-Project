@@ -123,7 +123,6 @@ export default function CreateSpot() {
             placeholder="Country"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-            required
             className="input1"
           />
           {errors.country && (
@@ -137,7 +136,6 @@ export default function CreateSpot() {
             placeholder="Street Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            required
             className="input1"
           />
           {errors.address && (
@@ -156,7 +154,6 @@ export default function CreateSpot() {
                 placeholder="City"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                required
                 className="input1"
               />
             </div>
@@ -170,7 +167,6 @@ export default function CreateSpot() {
                 placeholder="State"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                required
                 className="input1"
               />
             </div>
@@ -178,10 +174,10 @@ export default function CreateSpot() {
           </div>
 
           {errors.city && (
-            <p style={{ fontSize: "10px", color: "red" }}>*{errors.city}</p>
+            <span style={{ fontSize: "10px", color: "red", paddingRight: "5px" }}>*{errors.city}</span>
           )}
           {errors.state && (
-            <p style={{ fontSize: "10px", color: "red" }}>*{errors.state}</p>
+            <span style={{ fontSize: "10px", color: "red" }}>*{errors.state}</span>
           )}
         </div>
 
@@ -234,7 +230,6 @@ export default function CreateSpot() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           id="input-textarea"
-          required
           className="input1"
         />
         {errors.description && (
@@ -254,7 +249,6 @@ export default function CreateSpot() {
           placeholder="Name of your spot"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required
           className="input1"
         />
         {errors.name && (
@@ -278,7 +272,6 @@ export default function CreateSpot() {
             placeholder="Price per night (USD)"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            required
             className="input1"
           />
         </div>
@@ -329,7 +322,7 @@ export default function CreateSpot() {
           onChange={(e) => setImageURL4(e.target.value)}
           className="image-input input1"
         />
-
+<div className="section-gap" />
         <div className="create-form-button">
           <button type="submit">Create Spot</button>
         </div>
