@@ -110,6 +110,7 @@ export default function UpdateSpot() {
   }, [spot])
 
 
+
   if (spot === undefined) return null;
 
   return (

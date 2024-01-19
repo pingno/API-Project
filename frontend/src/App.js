@@ -23,8 +23,6 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
 
-
-      
       {isLoaded && (
         <Switch>
 
@@ -33,8 +31,6 @@ function App() {
           </Route>
 
 
- 
-          
           <Route exact path="/spots/new">
             <CreateSpot />
           </Route>

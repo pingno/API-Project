@@ -16,6 +16,7 @@ export default function DeleteReviewModal({ reviewId }) {
   };
 
   return (
+
     <div className="delete-review-container">
       <div className="delete-review-title">Confirm Delete</div>
       <div className="delete-review-text">
@@ -28,5 +29,6 @@ export default function DeleteReviewModal({ reviewId }) {
         No (Keep Review)
       </button>
     </div>
+    
   );
 }
