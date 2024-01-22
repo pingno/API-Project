@@ -153,7 +153,7 @@ router.get('/current', requireAuth, async (req,res,next) => {
             if(images[j].preview == true){
             spotsJSON[i].previewImage = images[j].url
             break
-            } else { spotsJSON[i].previewImage = 'No preview available'  }
+            } else { spotsJSON[i].previewImage = 'No preview available' }
         } else {
             spotsJSON[i].previewImage = 'No preview available'
         }

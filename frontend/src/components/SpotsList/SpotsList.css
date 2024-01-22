@@ -12,6 +12,7 @@
 .each-spot-tile{
     display: flex;
     justify-content: center;
+
 }
 
 .spotlist-block{

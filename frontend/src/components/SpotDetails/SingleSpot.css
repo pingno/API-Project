@@ -38,11 +38,13 @@
     grid-template-rows: 50% 50%;
 
     
-    height: 450px;
+    height: 500px;
     width: 100%;
 
     margin: 10px;
     /* border: 2px solid red; */
+
+    gap: 5px;
 
 }
 
@@ -50,30 +52,42 @@
     height: 100%;
     width: 100%;
     grid-area: img0;
+    object-fit: content;
+
+    border-radius: 25px;
+ 
 }
 
 .img1 {
     height: 100%;
     width: 100%;
     grid-area: img1;
+    object-fit: content;
+    border-radius: 25px;
 }
 
 .img2 {
     height: 100%;
     width: 100%;
     grid-area: img2;
+    object-fit: content;
+    border-radius: 25px;
 }
 
 .img3 {
     height: 100%;
     width: 100%;
     grid-area: img3;
+    object-fit: content;
+    border-radius: 25px;
 }
 
 .img4 {
     height: 100%;
     width: 100%;
     grid-area: img4;
+    object-fit: content;
+    border-radius: 25px;
 }
 
 
