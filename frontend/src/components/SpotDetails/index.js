@@ -40,10 +40,10 @@ export default function SpotDetails() {
 
     
       <div id="spot-detail-container">
-        <h2 id="first-row-details">{theSpot.name}</h2>
-        <h4 id="second-row-details">
+        <h1 id="first-row-details">{theSpot.name}</h1>
+        <h3 id="second-row-details">
           {theSpot.city}, {theSpot.state}, {theSpot.country}
-        </h4>
+        </h3>
 
         <div id="images-container">
           {theSpot && <img className="img0" src={theSpot.SpotImages[0].url} />}
