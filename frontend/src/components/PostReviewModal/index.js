@@ -15,7 +15,7 @@ export default function PostReviewModal({ theSpot, setMadeReview }) {
   const { closeModal } = useModal();
 
   const sessionUser = useSelector((state) => state.session.user);
-  // console.log("SESSION USER", sessionUser);
+
 
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
@@ -24,7 +24,6 @@ export default function PostReviewModal({ theSpot, setMadeReview }) {
 
   const disabled = review.length < 10 || stars === 0;
 
-  // console.log("MY SPOT", theSpot)
 
   const handleSubmit = (e) => {
     let newReview = {

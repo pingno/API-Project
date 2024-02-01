@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 import { getSpot } from "../../store/spots";
 import "./SingleSpot.css";
 import Reviews from "../ReviewsList";
-import { useState } from "react";
-import { getReviewsforSpot } from "../../store/reviews";
+
 
 export default function SpotDetails() {
   const dispatch = useDispatch();
@@ -21,7 +20,6 @@ export default function SpotDetails() {
       reviews.reduce((acc, curr) => acc + curr.stars, 0) / reviews.length;
   }
 
-  console.log("THE SPOT", theSpot);
 
   useEffect(() => {
     dispatch(getSpot(spotId));

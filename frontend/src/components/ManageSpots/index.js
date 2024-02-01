@@ -21,7 +21,6 @@ export default function ManageSpotsList() {
 
   const newSpots = mySpots.filter((spots) => spots.ownerId === sessionUser.id);
 
-  // console.log("SPOTS FILTERED", newSpots);
 
   return (
     <div className="manage-spots-container">
