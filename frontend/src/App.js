@@ -11,6 +11,7 @@ import CreateSpot from "./components/CreateSpot";
 import ManageSpotsList from "./components/ManageSpots";
 import ManageReviewsList from "./components/ManageReviews";
 import UpdateSpot from "./components/UpdateSpot";
+import Footer from "./components/Footer"
 
 function App() {
   const dispatch = useDispatch();
@@ -58,6 +59,10 @@ function App() {
           <Route>404 Page could not be found</Route>
         </Switch>
       )}
+
+
+        <Footer />
+
     </>
   );
 }
