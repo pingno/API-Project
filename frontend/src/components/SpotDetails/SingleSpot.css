@@ -12,6 +12,8 @@
     border-bottom: 2px solid lightgrey;
 
     width: 80%;
+    max-width: 1440px;
+    min-width: 1028px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,6 +42,7 @@
     
     height: 500px;
     width: 100%;
+    /* width: 1038px; */
 
     margin: 10px;
     /* border: 2px solid red; */
